@@ -1,0 +1,16 @@
+.bg-image {
+  background-image: url('../../../../assets/images/illustration.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.custom-flat-button {
+  border-radius: 0;
+  padding: 20px 30px;
+  font-size: 1rem /* 16px */;
+  line-height: 1.5rem ;
+}
+
+.custom-flat-button:hover {
+  background-color: #00a2ff;
+}
