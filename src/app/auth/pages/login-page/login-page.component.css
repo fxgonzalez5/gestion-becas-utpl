@@ -1,0 +1,13 @@
+.bg-image {
+  background-image: url('../../../../assets/images/illustration.jpg');
+  background-size: cover;
+  background-position: center;
+}
+
+.custom-flat-button {
+  border-radius: 0;
+}
+
+.custom-flat-button:hover {
+  background-color: #00a2ff;
+}
