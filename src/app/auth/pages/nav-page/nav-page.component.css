@@ -1,0 +1,17 @@
+.bg-nav, a {
+    background-color: rgb(1, 66, 115);
+}
+
+.active-link {
+    color: #FEBE10;
+}
+
+
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #00A4BD;
+}

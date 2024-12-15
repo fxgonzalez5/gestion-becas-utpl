@@ -1,0 +1,19 @@
+<div class="bg-nav flex sticky -top-0 z-40 items-center justify-between bg-blue-900">
+    <div class="flex items-center justify-start">
+        <img src="../../../../assets/images/logo_utpl.png" alt="Logo UTPL" class="h-20 px-8">
+        <nav class="justify-between ">
+            <a class="text-xl text-white sans-serif px-4 cursor-pointer" routerLink="/auth/home" routerLinkActive="active-link">Home</a>
+            <div class="dropdown inline-block relative">
+                <button class="text-xl text-white sans-serif" [ngClass]="{ 'text-yellow-400': isSubRouteActive }">Becas y Ayudas Estudiantiles</button>
+                <div class="dropdown-content hidden absolute w-full overflow-auto">
+                    <a class="text-xl text-white sans-serif px-4 cursor-pointer block p-1.5 w-full" 
+                        routerLink="/auth/application" routerLinkActive="active-link"
+                        (click)="updateActiveState('/auth/application')">Solicitud</a>
+                    <a class="text-xl text-white sans-serif px-4 cursor-pointer block p-1.5 w-full">Seguimiento</a>
+                </div>
+            </div>
+        </nav></div>
+    <nav>
+        <a class="text-xl text-white sans-serif pr-4" href="">Ayuda</a>
+    </nav>
+</div>
