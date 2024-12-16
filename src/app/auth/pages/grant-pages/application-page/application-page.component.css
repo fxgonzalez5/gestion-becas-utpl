@@ -1,0 +1,16 @@
+
+.card:hover {
+    background-color: #024272;
+}
+
+.card:hover .text-card{
+    color: white;
+}
+
+.card:hover .btn-card {
+    background-color: #FEBE10;
+}
+
+.card:hover .path-icon{
+    fill: white;
+}
