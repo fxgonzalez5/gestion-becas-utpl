@@ -1,47 +1,49 @@
-<nav-page></nav-page>
-<div class="h-full">
-    <div class="overflow-x-auto p-4 ">
-        <table class="h-full w-full bg-white">
-          <thead class="bg-blue-800 text-white border-y-2 border-white">
-            <tr>
-              <th class="py-2 px-4 text-left rounded-l-xl">AÑO</th>
-              <th class="py-2 px-4 text-left">PERÍODO</th>
-              <th class="py-2 px-4 text-left">MODALIDAD</th>
-              <th class="py-2 px-4 text-left">TIPO DE BECA</th>
-              <th class="py-2 px-4 text-left">FECHA DE SOLICITUD</th>
-              <th class="py-2 px-4 text-left">ESTADO DE SOLICITUD</th>
-              <th class="py-2 px-4 text-left">OBSERVACIONES</th>
-              <th class="py-2 px-4 text-center">ACCIONES</th>
-              <th class="py-2 px-4 text-center rounded-r-xl">FORMULARIO</th>
-            </tr>
-          </thead>
-          <tbody >
-             @for (dato of datosTabla; track $index) {
-                <tr class="border-t border-gray-300 border-y-2 border-white ">
-                    <td class="py-2 px-4 bg-slate-300 rounded-l-xl">{{ dato.anio }}</td>
-                    <td class="py-2 px-4 bg-slate-300">{{ dato.periodo }}</td>
-                    <td class="py-2 px-4 bg-slate-300">{{ dato.modalidad }}</td>
-                    <td class="py-2 px-4 bg-slate-300">{{ dato.tipoBeca }}</td>
-                    <td class="py-2 px-4 bg-slate-300">{{ dato.fechaSolicitud }}</td>
-                    <td class="py-2 px-4 bg-slate-300">{{ dato.estadoSolicitud }}</td>
-                    <td class="py-2 px-4 bg-slate-300 rounded-r-xl">{{ dato.observaciones }}</td>
-                    <td class="flex py-2 px-4 text-center">
-                        <a class="bg-[#7EC995] text-[#024272] text-white px-3 py-1 rounded hover:bg-[#FEBE10] hover:text-white cursor-pointer"
-                        [routerLink]="dato.ruta" routerLinkActive="active-link">
-                          Ver / Modificar
-                        </a>
-                        <span class="w-2"></span>
-                        <button class="bg-[#E67E7E] text-[#024272] px-3 py-1 rounded hover:bg-red-600 hover:text-white">Borrar</button>
-                    </td>
-                    <td class="py-2 px-4 text-center">
-                      <button class="bg-[#FEBE10] text-[#024272] px-3 py-1 rounded hover:bg-yellow-600 hover:text-white">
-                        Generar PDF
-                      </button>
-                    </td>
-                  </tr>
-             }
-          </tbody>
-        </table>
-      </div>
+<div class="h-dvh relative size-fit w-full flex-1">
+  <nav-page></nav-page>
+  <div class="h-vh size-fit w-full top-0 left-0 relative">
+      <div class="overflow-x-auto p-4 ">
+          <table class="h-full w-full bg-white">
+            <thead class="bg-blue-800 text-white border-y-2 border-white">
+              <tr>
+                <th class="py-2 px-4 text-left rounded-l-xl">AÑO</th>
+                <th class="py-2 px-4 text-left">PERÍODO</th>
+                <th class="py-2 px-4 text-left">MODALIDAD</th>
+                <th class="py-2 px-4 text-left">TIPO DE BECA</th>
+                <th class="py-2 px-4 text-left">FECHA DE SOLICITUD</th>
+                <th class="py-2 px-4 text-left">ESTADO DE SOLICITUD</th>
+                <th class="py-2 px-4 text-left">OBSERVACIONES</th>
+                <th class="py-2 px-4 text-center">ACCIONES</th>
+                <th class="py-2 px-4 text-center rounded-r-xl">FORMULARIO</th>
+              </tr>
+            </thead>
+            <tbody >
+              @for (dato of datosTabla; track $index) {
+                  <tr class="border-t border-gray-300 border-y-2 border-white ">
+                      <td class="py-2 px-4 bg-slate-300 rounded-l-xl">{{ dato.anio }}</td>
+                      <td class="py-2 px-4 bg-slate-300">{{ dato.periodo }}</td>
+                      <td class="py-2 px-4 bg-slate-300">{{ dato.modalidad }}</td>
+                      <td class="py-2 px-4 bg-slate-300">{{ dato.tipoBeca }}</td>
+                      <td class="py-2 px-4 bg-slate-300">{{ dato.fechaSolicitud }}</td>
+                      <td class="py-2 px-4 bg-slate-300">{{ dato.estadoSolicitud }}</td>
+                      <td class="py-2 px-4 bg-slate-300 rounded-r-xl">{{ dato.observaciones }}</td>
+                      <td class="flex py-2 px-4 text-center">
+                          <a class="bg-[#7EC995] text-[#024272] text-white px-3 py-1 rounded hover:bg-[#FEBE10] hover:text-white cursor-pointer"
+                          [routerLink]="dato.ruta" routerLinkActive="active-link">
+                            Ver / Modificar
+                          </a>
+                          <span class="w-2"></span>
+                          <button class="bg-[#E67E7E] text-[#024272] px-3 py-1 rounded hover:bg-red-600 hover:text-white">Borrar</button>
+                      </td>
+                      <td class="py-2 px-4 text-center">
+                        <button class="bg-[#FEBE10] text-[#024272] px-3 py-1 rounded hover:bg-yellow-600 hover:text-white">
+                          Generar PDF
+                        </button>
+                      </td>
+                    </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+  </div>
+  <footer-page class="absolute bottom-0 w-full"></footer-page>
 </div>
-<footer-page></footer-page>

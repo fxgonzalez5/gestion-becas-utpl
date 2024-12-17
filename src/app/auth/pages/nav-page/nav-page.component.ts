@@ -24,7 +24,9 @@ export default class NavPageComponent implements OnInit {
 
   updateActiveState(currentRoute: string): void {
     // Verifica si la ruta actual coincide con las subrutas de "Becas y Ayudas Estudiantiles"
-    const subRoutes = ['/auth/application', '/auth/followup', '/auth/grantrequirements'];
+    const subRoutes = ['/auth/application', '/auth/followup', 
+                       '/auth/grantrequirements', '/auth/grantapplication',
+                       '/auth/location', '/auth/socioeconomicdata'];
     this.isSubRouteActive = subRoutes.includes(currentRoute);
   }
 

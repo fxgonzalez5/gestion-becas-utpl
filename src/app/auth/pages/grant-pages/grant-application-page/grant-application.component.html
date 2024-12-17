@@ -1,0 +1,180 @@
+<nav-page></nav-page>
+<div class="list-item">
+    <div class="flex items-center justify-start w-full pl-16 pt-4">
+        <h2 class="text-2xl text-blue-900 pr-4 font-medium">Información de la solicitud</h2>
+    </div>
+    <hr class="h-px m-4 bg-[#024272] border-0 dark:bg-[#024272]"> 
+    <form class="flex flex-col my-4 mx-16">
+        <div class="my-2">
+            <label for="monto" class="text-[#024272] text-inter mr-4">
+                1. Monto de ingresos nominales familiares:
+            </label>
+            <input id="monto" name="monto" type="number" min="0"  class="border border-black w-16 rounded"/>
+        </div>
+        <div class="my-2">
+            <label for="ingresos" class="text-[#024272] text-inter mr-4">
+                2. Los ingresos provienen de:
+            </label>
+            <select id="ingresos" name="ingresos" class="border border-black rounded">
+                <option value="ninguno">Ninguno</option>
+                <option value="trabajo">Trabajo</option>
+                <option value="pasivo">Ingresos pasivos</option>
+            </select>
+        </div>
+        <div class="my-2">
+            <label for="documento" class="text-[#024272] text-inter mr-4">
+                3. Tipo de documento legal de ingresos del núcleo familiar:
+            </label>
+            <select id="documento" name="documento" class="border border-black rounded">
+                <option value="ninguno">Ninguno</option>
+                <option value="cedula">Cédula</option>
+                <option value="pasaporte">Pasaporte</option>
+            </select>
+        </div>
+        <div class="my-2">
+            <label for="afiliacion" class="text-[#024272] text-inter mr-4">
+                4. Tipo de afiliación al IESS del solicitante:
+            </label>
+            <select id="afiliacion" name="afiliacion" class="border border-black rounded">
+                <option value="ninguno">Ninguna</option>
+                <option value="dependencia">Afiliación bajo relación de dependencia</option>
+                <option value="independiente">Afiliación independiente</option>
+                <option value="voluntaria">Afiliación voluntaria</option>
+            </select>
+        </div>
+        <div class="my-2">
+            <label for="miembrosFamiliar" class="text-[#024272] text-inter mr-4">
+                5. Número de miembros del núcle familiar (1° consanguinidad):
+            </label>
+            <input id="miembrosFamiliar" name="miembrosFamiliar" type="number" min="0" class="border border-black w-16 rounded"/>
+        </div>
+        <div class="flex my-2">
+            <label for="ruc" class="text-[#024272] text-inter mr-4">
+                6. Alguien de su núcleo familiar tiene RUC:
+            </label>
+            <select id="ruc" name="ruc" class="border border-black rounded mr-4">
+                <option value="si">Si</option>
+                <option value="no">No</option>
+            </select>
+            <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9.35 18.75H4C3.45 18.75 2.97917 18.546 2.5875 18.138C2.19583 17.73 2 17.2396 2 16.6666V4.16665C2 3.59373 2.19583 3.10328 2.5875 2.69529C2.97917 2.28731 3.45 2.08331 4 2.08331H20C20.55 2.08331 21.0208 2.28731 21.4125 2.69529C21.8042 3.10328 22 3.59373 22 4.16665V16.6666C22 17.2396 21.8042 17.73 21.4125 18.138C21.0208 18.546 20.55 18.75 20 18.75H14.65L12.825 21.6146C12.625 21.9271 12.35 22.0833 12 22.0833C11.65 22.0833 11.375 21.9271 11.175 21.6146L9.35 18.75ZM4 16.6666H20V4.16665H4V16.6666Z" fill="#EAAB00"/>
+            </svg> 
+        </div>
+        <div class="flex my-2">
+            <label for="calamidad" class="text-[#024272] text-inter mr-4">
+                7. Su núcleo familiar cuenta con alguna calamidad doméstica:
+            </label>
+            <select id="calamidad" name="calamidad" class="border border-black rounded mr-4">
+                <option value="si">Si</option>
+                <option value="no">No</option>
+            </select>
+            <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9.35 18.75H4C3.45 18.75 2.97917 18.546 2.5875 18.138C2.19583 17.73 2 17.2396 2 16.6666V4.16665C2 3.59373 2.19583 3.10328 2.5875 2.69529C2.97917 2.28731 3.45 2.08331 4 2.08331H20C20.55 2.08331 21.0208 2.28731 21.4125 2.69529C21.8042 3.10328 22 3.59373 22 4.16665V16.6666C22 17.2396 21.8042 17.73 21.4125 18.138C21.0208 18.546 20.55 18.75 20 18.75H14.65L12.825 21.6146C12.625 21.9271 12.35 22.0833 12 22.0833C11.65 22.0833 11.375 21.9271 11.175 21.6146L9.35 18.75ZM4 16.6666H20V4.16665H4V16.6666Z" fill="#EAAB00"/>
+            </svg>            
+        </div>
+        <div class="my-2">
+            <label for="nucleoCalamidad" class="text-[#024272] text-inter mr-4">
+                8. Qué miembro de su núcleo familiar registra la calamidad doméstica:
+            </label>
+            <select id="nucleoCalamidad" name="nucleoCalamidad" class="border border-black rounded">
+                <option value="ninguno">Ninguna</option>
+                <option value="padre">Padre</option>
+                <option value="madre">Madre</option>
+                <option value="hemano">Hermano/a</option>
+            </select>
+        </div>
+        <div class="my-2">
+            <label for="bono" class="text-[#024272] text-inter mr-4">
+                9. Usted o algún miembro de la familia recibe el bono de desarrollo humano:
+            </label>
+            <select id="bono" name="bono" class="border border-black rounded mr-4">
+                <option value="si">Si</option>
+                <option value="no">No</option>
+            </select>
+        </div>
+        <div class="my-2">
+            <label for="bonoFamiliar" class="text-[#024272] text-inter mr-4">
+                10. Qué miembro de su núcleo familiar cuenta con el bono de desarrollo humano:
+            </label>
+            <select id="bonoFamiliar" name="bonoFamiliar" class="border border-black rounded">
+                <option value="ninguno">Ninguna</option>
+                <option value="padre">Padre</option>
+                <option value="madre">Madre</option>
+                <option value="hemano">Hermano/a</option>
+            </select>
+        </div>
+        <div class="my-2">
+            <label for="serviciosMedicos" class="text-[#024272] text-inter mr-4">
+                11. Servicios médicos con los que cuenta la familia:
+            </label>
+            <select id="serviciosMedicos" name="serviciosMedicos" class="border border-black rounded">
+                <option value="ninguno">Ninguna</option>
+                <option value="privada">Privada</option>
+                <option value="publica">Pública</option>
+                <option value="social">Social</option>
+            </select>
+        </div>
+        <div class="flex my-2">
+            <label for="registroSocial" class="text-[#024272] text-inter mr-4">
+                12. Usted o algún miembro de la familia cuenta con registro social:
+            </label>
+            <select id="registroSocial" name="registroSocial" class="border border-black rounded mr-4">
+                <option value="si">Si</option>
+                <option value="no">No</option>
+            </select>
+            <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9.35 18.75H4C3.45 18.75 2.97917 18.546 2.5875 18.138C2.19583 17.73 2 17.2396 2 16.6666V4.16665C2 3.59373 2.19583 3.10328 2.5875 2.69529C2.97917 2.28731 3.45 2.08331 4 2.08331H20C20.55 2.08331 21.0208 2.28731 21.4125 2.69529C21.8042 3.10328 22 3.59373 22 4.16665V16.6666C22 17.2396 21.8042 17.73 21.4125 18.138C21.0208 18.546 20.55 18.75 20 18.75H14.65L12.825 21.6146C12.625 21.9271 12.35 22.0833 12 22.0833C11.65 22.0833 11.375 21.9271 11.175 21.6146L9.35 18.75ZM4 16.6666H20V4.16665H4V16.6666Z" fill="#EAAB00"/>
+            </svg>   
+        </div>
+        <div class="my-2">
+            <label for="tipoDiscapacidad" class="text-[#024272] text-inter mr-4">
+                13. Tipo de discapacidad que posee:
+            </label>
+            <select id="tipoDiscapacidad" name="tipoDiscapacidad" class="border border-black rounded">
+                <option value="ninguno">Ninguna</option>
+                <option value="fisica">Discapacidad física</option>
+                <option value="mental">Discapacidad mental</option>
+                <option value="intelectual">Discapacidad intelectual</option>
+                <option value="sensorial">Discapacidad sensorial</option>
+                <option value="pluridiscapacidad">Pluridiscapacidad</option>
+            </select>
+        </div>
+        <div class="flex flex-col my-2">
+            <label for="motivo" class="text-[#024272] text-inter mb-4">
+                14. Mencione el motivo por el cual solicita la beca
+            </label>
+            <textarea  id="motivo" name="motivo" type="textarea" class="resize-y border border-black h-[100px] w-[500px] rounded"></textarea>
+        </div>
+    </form>
+    <div class="flex items-center justify-start w-full pl-16">
+        <h2 class="text-2xl text-blue-900 pr-4 font-medium">Términos y condiciones</h2>
+    </div>
+    <hr class="h-px m-4 bg-[#024272] border-0 dark:bg-[#024272]">
+    <div class="ml-16">
+        <h3 class="text-[#024272] text-inter mb-8">Declaro de forma expresa conocer y aceptar lo siguiente:</h3>
+        <p class="text-[#024272] text-inter my-4">
+            <strong>1.</strong> La postulación y renovación de la beca son de mi responsabilidad, por tanto, debo realzarlas de manera semestral bajo las condiciones, requisitos y porcentajes de asignación vigentes para el efecto en cada período académico. En consecuencia, si es que incurro en cumplimiento de este literal, la beca no se me otorgará.
+        </p>
+        <p class="text-[#024272] text-inter my-4">
+            <strong>2.</strong> La beca tiene como requisitos académicos mantener un promedio mínimo semestral y la aprobación de todas las asignaturas del periodo académico anterior al de la postulación. En caso de incumplimiento de estos requisitos mi beca será suspendida hasta que se subsane dicho incumplimiento.
+        </p>
+        <p class="text-[#024272] text-inter my-4">
+            <strong>3.</strong> El otorgamiento de becas está regulado por el Reglamento de Becas de la UTPL e Instructivo de Becas de la UTPL, los cuales pueden ser objeto de reformas; y, en tal virtud, me comprometo a revisar sus actualizaciones de forma constante en la pagina web de Procuraduría Universitaria: https://procuraduria.utpl.edu.ec.
+        </p>
+        <div class="flex items-center my-4">
+            <input id="terminosCondiciones" name="terminosCondiciones" type="checkbox" class="mr-2 h-4 w-4">
+            <label for="terminosCondiciones" class="text-[#024272] text-inter">He leído y acepto los términos y condiciones de postulación</label>
+        </div>
+    </div>
+    <div class="flex items-center justify-between mx-16 my-4">
+        <a class="flex bg-[#FEBE10] items-center justify-center border border-yellow-500 rounded-lg h-12 w-36  text-sm text-blue-900 font-medium cursor-pointer hover:text-white"
+            routerLink="/auth/grantrequirements" routerLinkActive="active-link">
+            Regresar
+        </a>
+        <a class="flex bg-gray-300 items-center justify-center border border-gray-300 rounded-lg h-12 w-36  text-sm text-gray-500 font-medium hover:cursor-no-drop  pointer-events-none"
+            routerLink="" routerLinkActive="active-link">
+            Enviar solitud
+        </a>
+    </div>
+</div>
+<footer-page></footer-page>

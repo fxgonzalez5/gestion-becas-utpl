@@ -9,6 +9,7 @@ module.exports = {
         inter: ['Inter', 'sans-serif'],
         display: ["group-hover"],
       },
+      darkMode: 'selector',
     },
   },
   },

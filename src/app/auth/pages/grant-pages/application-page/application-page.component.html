@@ -1,76 +1,78 @@
-<nav-page></nav-page>
-<div class="list-item">
-    <div class="flex items-center justify-between w-full">
-        <div class="flex items-center justify-start pl-16">
-            <h2 class="text-2xl text-blue-900 pr-4 font-medium">Seleccione año y período de ayuda</h2>
-            <h2 class="text-4xl text-yellow-400">|</h2>
+<div class="h-full relative size-fit w-full flex-1">
+    <nav-page></nav-page>
+    <div class="h-vh size-fit w-full top-0 left-0 relative">
+        <div class="flex items-center justify-between w-full mt-2">
+            <div class="flex items-center justify-start pl-16">
+                <h2 class="text-blue-900 pr-4 font-medium min-text-base">Seleccione año y período de ayuda</h2>
+                <h2 class="min-text-base text-yellow-400">|</h2>
+            </div>
+            <div class="flex items-center justify-stretch">
+                <label for="year" class="min-text-base text-blue-900 pr-4">Año:</label>
+                <select id="year" class="border border-black">
+                    @for (anio of anios; track $index) {
+                        <option class="min-text-xs">{{ anio.valor }}</option>
+                    }
+                </select>
+            </div>
+            <div class="flex items-center justify-stretch">
+                <label for="periodo" class="min-text-base text-blue-900 pr-4">Periodo:</label>
+                <select id="periodo" class="border border-black">
+                    @for (periodo of periodos; track $index) {
+                        <option class="min-text-xs">{{ periodo.valor }}</option>
+                    }
+                </select>
+            </div>
+            <div class="flex items-center justify-stretch pr-8">
+                <label for="modalidad" class="min-text-base text-blue-900 pr-4">Modalidad:</label>
+                <select id="modalidad" class="border border-black">
+                    @for (modalidad of modalidades; track $index) {
+                        <option class="min-text-xs">{{ modalidad.valor }}</option>
+                    }
+                </select>
+            </div>
         </div>
-        <div class="flex items-center justify-stretch">
-            <label for="year" class="text-xl text-blue-900 pr-4">Año:</label>
-            <select id="year" class="border border-black">
-                @for (anio of anios; track $index) {
-                    <option>{{ anio.valor }}</option>
-                }
-            </select>
+        <hr class="h-px m-2 bg-[#024272] border-0 dark:bg-[#024272]">  
+        <div class="flex justify-between my-2">
+            <h2 class="min-text-base text-blue-900 pl-16 font-medium">Seleccione el tipo de beca</h2>
+            <div class="flex items-center justify-stretch pr-8">
+                <label for="categoria" class="min-text-base text-blue-900 pr-2">Categorías:</label>
+                <select id="categoria" class="border border-black">
+                    @for (categoria of categorias; track $index) {
+                        <option class="min-text-base">{{ categoria.valor }}</option>
+                    }
+                </select>
+            </div>
         </div>
-        <div class="flex items-center justify-stretch">
-            <label for="periodo" class="text-xl text-blue-900 pr-4">Periodo:</label>
-            <select id="periodo" class="border border-black">
-                @for (periodo of periodos; track $index) {
-                    <option>{{ periodo.valor }}</option>
-                }
-            </select>
-        </div>
-        <div class="flex items-center justify-stretch pr-8">
-            <label for="modalidad" class="text-xl text-blue-900 pr-4">Modalidad:</label>
-            <select id="modalidad" class="border border-black">
-                @for (modalidad of modalidades; track $index) {
-                    <option>{{ modalidad.valor }}</option>
-                }
-            </select>
-        </div>
-    </div>
-    <hr class="h-px m-4 bg-gray-200 border-0 dark:bg-gray-700"> 
-    <div class="flex justify-between">
-        <h2 class="text-2xl text-blue-900 pl-16 font-medium">Seleccione el tipo de beca</h2>
-        <div class="flex items-center justify-stretch pr-8">
-            <label for="categoria" class="text-xl text-blue-900 pr-4">Categorías:</label>
-            <select id="categoria" class="border border-black">
-                @for (categoria of categorias; track $index) {
-                    <option>{{ categoria.valor }}</option>
-                }
-            </select>
-        </div>
-    </div>
-    <div class="grid grid-cols-4 gap-4 w-full p-8">
-        @for (card of cards; track card.id) {
-            <div class="card flex-col items-stretch border h-46 w-72 p-4 rounded-lg bg-slate-200 shadow-lg">
-                <div class="flex items-center justify-stretch w-full">
-                    <div [innerHTML]="card.svg"></div>
-                    <div class="pl-4">
-                        <h3 class="text-card text-sm text-blue-900 font-medium">
-                            <strong>{{ card.titulo }}</strong>
-                        </h3>
-                        <h3 class="text-card text-sm text-blue-900 font-medium">
-                            <strong>Categoria:</strong> {{ card.categoria }}
-                        </h3>
+        <div class="grid grid-cols-4 gap-4 w-full pl-4">
+            @for (card of cards; track card.id) {
+                <div class="card flex-col items-stretch border h-46 w-72 p-4 rounded-lg bg-slate-200 shadow-lg">
+                    <div class="flex items-center justify-stretch w-full">
+                        <div [innerHTML]="card.svg"></div>
+                        <div class="pl-4">
+                            <h3 class="text-card text-sm text-blue-900 font-medium">
+                                <strong>{{ card.titulo }}</strong>
+                            </h3>
+                            <h3 class="text-card text-sm text-blue-900 font-medium">
+                                <strong>Categoria:</strong> {{ card.categoria }}
+                            </h3>
+                        </div>
+                    </div>
+                    <div class="py-2">
+                        <h3 class="text-card text-sm text-blue-900 line-clamp-2"> <strong> Dirigido a: </strong> {{ card.dirigido }} </h3>
+                        <h3 class="text-sm  text-yellow-500">Más información...</h3>
+                    </div>
+                    <div class="flex items-center justify-end">
+                        <a class="btn-card pt-1 text-center border border-yellow-500 rounded-full h-7 w-36  text-sm text-blue-900 font-medium cursor-pointer"
+                            [routerLink]="card.ruta" routerLinkActive="active-link">
+                            {{ card.textoBoton }}
+                        </a>
                     </div>
                 </div>
-                <div class="py-2">
-                    <h3 class="text-card text-sm text-blue-900 line-clamp-2"> <strong> Dirigido a: </strong> {{ card.dirigido }} </h3>
-                    <h3 class="text-sm  text-yellow-500">Más información...</h3>
-                </div>
-                <div class="flex items-center justify-end">
-                    <a class="btn-card pt-1 text-center border border-yellow-500 rounded-full h-7 w-36  text-sm text-blue-900 font-medium cursor-pointer"
-                        [routerLink]="card.ruta" routerLinkActive="active-link">
-                        {{ card.textoBoton }}
-                    </a>
-                </div>
-            </div>
-        }
+            }
+        </div>
+        <div class="flex aling-center justify-center py-4">
+            <button class="bg-yellow-500 w-36 h-9 rounded-xl text-blue-900 font-semibold">Ver más +</button>
+        </div>
     </div>
-    <div class="flex aling-center justify-center py-4">
-        <button class="bg-yellow-500 w-36 h-9 rounded-xl text-blue-900 font-semibold">Ver más +</button>
-    </div>
+    <footer-page class="absolute bottom-0 w-full"></footer-page>
 </div>
-<footer-page></footer-page>
