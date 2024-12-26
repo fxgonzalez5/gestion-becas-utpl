@@ -4,3 +4,42 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* Estilos del color primario */
+.text-primary {
+  color: #004270;
+}
+.bg-primary {
+  background-color: #004270;
+}
+.border-primary {
+  border-color: #004270;
+}
+
+/* Estilos del color secundario */
+.text-secondary {
+  color: #FEBE10;
+}
+.hover\:text-secondary:hover {
+  color: #FEBE10;
+}
+.bg-secondary {
+  background-color: #FEBE10;
+}
+.hover\:bg-secondary:hover {
+  background-color: #FEBE10;
+}
+.border-secondary {
+  border-color: #FEBE10;
+}
+
+/* Estilos del color de superficie */
+.text-surface {
+  color: #E6E6E6;
+}
+.bg-surface {
+  background-color: #E6E6E6;
+}
+.border-surface {
+  border-color: #E6E6E6;
+}

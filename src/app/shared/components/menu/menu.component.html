@@ -1,0 +1,15 @@
+<ul>
+  @for (route of routes; track $index;
+    let last = $last) {
+    <li>
+      <a [routerLink]="route.path" (click)="onOptionSelected()"
+        class="block py-2 px-4 hover:bg-secondary hover:font-medium">
+        {{ route.title }}
+      </a>
+    </li>
+
+    @if (!last) {
+      <hr class="border-primary">
+    }
+  }
+</ul>

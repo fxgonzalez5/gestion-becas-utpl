@@ -1,0 +1,12 @@
+<div class="flex flex-col min-h-screen">
+  <!-- Navbar -->
+  <shared-navigation [onLogout]="onLogout.bind(this)"></shared-navigation>
+
+  <!-- Contenido Principal -->
+  <main class="flex-grow">
+    <router-outlet></router-outlet>
+  </main>
+
+  <!-- Footer -->
+  <shared-footer></shared-footer>
+</div>

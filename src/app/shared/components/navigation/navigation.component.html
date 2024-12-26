@@ -1,0 +1,43 @@
+<div class="bg-primary flex sticky -top-0 z-40 px-16">
+  <div class="flex flex-grow">
+
+    <!-- Logo de la Universidad -->
+    <img src="../../../../assets/images/logo_utpl.png" alt="Logo UTPL" class="h-20 mr-28">
+
+    <!-- Barra de Navegación -->
+    <nav class="flex flex-grow text-white text-xl items-center">
+
+      <!-- Grupo Izquierdo -->
+      <ul class="flex space-x-10 h-full">
+        <li class="grid place-items-center">
+          <a [routerLink]="menu[0].path"
+            routerLinkActive="text-secondary"
+            (click)="onMenuClose()"
+            class="hover:text-secondary">
+            Inicio
+          </a>
+        </li>
+
+        <li class="group relative grid place-items-center">
+          <a href="#"
+            [class.text-secondary]="isMenuActive()"
+            (click)="preventDefault($event)"
+            class="hover:text-secondary">
+            Becas y Ayudas Estudiantiles
+          </a>
+
+          <!-- Menú desplegable -->
+          <shared-menu [routes]="menu.slice(1)" (optionSelected)="onMenuOptionSelected()"
+            class="absolute top-full w-full bg-surface shadow-lg text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none group-hover:pointer-events-auto"/>
+          </li>
+      </ul>
+
+      <!-- Grupo Derecho -->
+      <ul class="ml-auto">
+        <li>
+          <a (click)="onLogout()" class="hover:text-secondary">Salir</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</div>
