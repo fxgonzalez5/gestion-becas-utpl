@@ -2,7 +2,7 @@
   <div class="flex flex-grow">
 
     <!-- Logo de la Universidad -->
-    <img src="../../../../assets/images/logo_utpl.png" alt="Logo UTPL" class="h-20 mr-28">
+    <img src="../../../../assets/images/logo_utpl.png" alt="Logo UTPL" class="h-[4.5rem] mr-28 pointer-events-none">
 
     <!-- Barra de Navegación -->
     <nav class="flex flex-grow text-white text-xl items-center">
@@ -19,8 +19,7 @@
         </li>
 
         <li class="group relative grid place-items-center">
-          <a href="#"
-            [class.text-secondary]="isMenuActive()"
+          <a [class.text-secondary]="isMenuActive()"
             (click)="preventDefault($event)"
             class="hover:text-secondary">
             Becas y Ayudas Estudiantiles

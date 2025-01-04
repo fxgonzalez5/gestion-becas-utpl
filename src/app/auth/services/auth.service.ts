@@ -15,8 +15,8 @@ export class AuthService {
   private _authStatus = signal<AuthStatus>(AuthStatus.checking);
   private _currentUser = signal<User | null>(null);
 
-  public currentUser = computed(() => this._currentUser());
   public authStatus = computed(() => this._authStatus());
+  public currentUser = computed(() => this._currentUser());
 
   constructor() {
     this.checkAuthStatus().subscribe();

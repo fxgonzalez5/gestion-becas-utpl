@@ -1,0 +1,24 @@
+mat-card {
+  @apply shadow-md shadow-neutral-400;
+  background-color: #E6E6E6;
+}
+
+mat-card-header, mat-card-content, mat-card-actions {
+  padding: 0;
+}
+
+mat-card-title {
+  @apply font-medium md:text-xl;
+  color: #024272;
+}
+
+mat-card-subtitle {
+  @apply md:text-sm;
+  color: #024272;
+}
+
+.btn-card {
+  @apply h-9 md:h-8 px-6 text-base font-medium md:text-sm;
+  border: 2px solid #FEBE10;
+  color: #024272 !important;
+}

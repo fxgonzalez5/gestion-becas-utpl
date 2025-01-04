@@ -8,7 +8,7 @@ import GrantApplicationPageComponent from './pages/grant-pages/grant-application
 import { LocationPageComponent } from './pages/grant-pages/location-page/location.component';
 import SocioEconomicDataPageComponent from './pages/grant-pages/socio-economic-data-page/socio-economic-data.component';
 
-export const AuthRoutes: Routes = [
+export const authRoutes: Routes = [
   { path: 'login', component: LoginPageComponent },
   { path: 'home', component: HomePageComponent },
   { path: 'application', component: ApplicationPageComponent},

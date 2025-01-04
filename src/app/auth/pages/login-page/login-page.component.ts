@@ -3,8 +3,6 @@ import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import Swal from 'sweetalert2'
 
@@ -12,13 +10,7 @@ import { ValidatorsService } from '@shared/services/validators.service';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
-  imports: [
-    CommonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatButtonModule,
-    ReactiveFormsModule,
-  ],
+  imports: [ CommonModule, MatButtonModule, ReactiveFormsModule ],
   templateUrl: './login-page.component.html',
   styleUrl: './login-page.component.css',
 })

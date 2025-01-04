@@ -1,0 +1,39 @@
+<mat-card class="w-[27.5rem] md:w-[21.5rem] mb-2 p-5 md:p-4 group hover:bg-primary hover:text-white transition-all duration-300">
+  <!-- Encabezado de la Tarjeta -->
+  <mat-card-header class="flex items-center h-[5.5rem] md:h-[4.5rem] mb-2">
+
+    <!-- Icono de Material -->
+    <span class="material-icons mr-4 p-2 text-4xl md:text-2xl text-primary bg-secondary rounded group-hover:text-white"
+    >{{ scholarship.icon }}</span>
+
+    <!-- Texto del Encabezado -->
+    <div>
+      <mat-card-title class="group-hover:text-white">{{ scholarship.type }}</mat-card-title>
+      <mat-card-subtitle class="group-hover:text-white">
+        Categoría: <span class="font-light">{{ scholarship.category }}</span>
+      </mat-card-subtitle>
+    </div>
+  </mat-card-header>
+
+  <!-- Contenido de la Tarjeta -->
+  <mat-card-content class="h-20 md:h-[4.5rem] md:text-sm">
+    <p class="inline text-primary group-hover:text-white">
+      <span class="font-medium">Dirigido a:</span>
+       @if (scholarship.description.length <= 135 ) {
+        {{ scholarship.description }}
+       } @else {
+        {{ scholarship.description.substring(0, 135) + '...' }}
+       }
+    </p>
+    <a [href]="scholarship.url" class="text-secondary font-medium0">
+      Más Info...
+    </a>
+  </mat-card-content>
+
+  <mat-card-actions class="flex justify-end">
+    <a mat-button
+      routerLink=""
+      class="btn-card group-hover:bg-secondary"
+      >Postular</a>
+  </mat-card-actions>
+</mat-card>
