@@ -11,7 +11,7 @@ export const panelRoutes: Routes = [
         title: 'Solicitud',
         loadComponent: () => import('./pages/scholarship-list-page/scholarship-list-page.component'),
         children: [
-          { path: 'requirements-list', loadComponent: () => import('./pages/requirements-list-page/requirements-list-page.component') },
+          { path: ':id/requirements', loadComponent: () => import('./pages/requirements-list-page/requirements-list-page.component') },
         ]
       },
       { path: '', redirectTo: 'home', pathMatch: 'full' },

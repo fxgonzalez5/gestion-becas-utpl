@@ -26,6 +26,7 @@ export default class ScholarshipListPageComponent implements OnInit {
 
   private _currentRoute = signal('');
   private _categories = signal<string[]>(['TODAS']);
+  private _scholarships: Scholarship[] = [];
   private _displayedScholarships = signal<Scholarship[]>([]);
   private _showButton = signal(true);
   private _isShowingAll = signal(false);
@@ -62,8 +63,8 @@ export default class ScholarshipListPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loadScholarships();
     this.updateCategories();
-    this.initializeScholarships();
   }
 
   getOptions(filter: string): string[] {
@@ -88,29 +89,30 @@ export default class ScholarshipListPageComponent implements OnInit {
     //* Se puede manejar el resto de filtros si se requiere
   }
 
+  private loadScholarships(): void {
+    this.scholarshipsService.getScholarships()
+      .subscribe((scholarships) => {
+        this._scholarships = scholarships;
+        this._displayedScholarships.set(scholarships.slice(0, this._size));
+      });
+
+    this._showButton.set(this._scholarships.length > this._size);
+  }
+
   private updateCategories(): void {
-    const allScholarships = this.scholarshipsService.scholarshipsList();
-    const uniqueCategories = new Set(allScholarships.map((scholarship) => scholarship.category));
+    const uniqueCategories = new Set(this._scholarships.map((scholarship) => scholarship.category));
     this._categories.update((categories) => [...categories, ...uniqueCategories]);
   }
 
-  private initializeScholarships(): void {
-    const allScholarships = this.scholarshipsService.scholarshipsList();
-    this._displayedScholarships.set(allScholarships.slice(0, this._size));
-    this._showButton.set(allScholarships.length > this._size);
-  }
-
   onLoadMore(): void {
-    const allScholarships = this.scholarshipsService.scholarshipsList();
-
     if (this._isShowingAll()) {
       // Ver menos
-      this._displayedScholarships.set(allScholarships.slice(0, this._size));
+      this._displayedScholarships.set(this._scholarships.slice(0, this._size));
       this._isShowingAll.set(false);
       this._showButton.set(true);
     } else {
       // Ver más
-      this._displayedScholarships.set(allScholarships);
+      this._displayedScholarships.set(this._scholarships);
       this._isShowingAll.set(true);
       this._showButton.set(false);
     }
