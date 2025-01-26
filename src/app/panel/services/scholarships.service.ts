@@ -1,8 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { computed, inject, Injectable, signal } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
+
+import { catchError, map, Observable, throwError } from 'rxjs';
+
 import { environment } from '@environments/environment';
 import { Scholarship, ScholarshipsResponse } from '../interfaces';
-import { catchError, map, Observable, throwError } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,13 +13,8 @@ export class ScholarshipsService {
   private readonly baseUrl:string = environment.baseUrl;
   private http = inject(HttpClient);
 
-  private _scholarshipsList = signal<Scholarship[]>([]);
-
-  public scholarshipsList = computed(() => this._scholarshipsList());
-
-  constructor() {}
-
-  loadScholarships(): Observable<void> {
+  // Método para obtener las becas
+  getScholarships(): Observable<Scholarship[]> {
     const url = `${this.baseUrl}/scholarship/all`;
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
@@ -31,7 +28,7 @@ export class ScholarshipsService {
             is_with_application: Boolean(scholarship.is_with_application)
           }));
 
-          this._scholarshipsList.set(transformedScholarships);
+          return transformedScholarships
         }),
         catchError(e => throwError(() => e.error.message))
       );

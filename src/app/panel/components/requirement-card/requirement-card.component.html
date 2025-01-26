@@ -1,0 +1,50 @@
+<mat-card class="md:w-[27.5rem] sm:w-[21.5rem] mb-2 md:p-5 sm:p-4">
+
+  <!-- Encabezado de la Tarjeta -->
+  <mat-card-header class="relative flex items-center justify-center mb-5">
+
+    @if (requirement.required) {
+      <!-- Icono para indicar que es Obligatorio -->
+      <span class="absolute top-0 left-0 material-icons md:text-2xl sm:text-xl text-primary">
+        error
+      </span>
+    }
+
+    @if (!requirement.image.includes('.')) {
+      <!-- Icono de Material -->
+      <span class="material-icons p-2 md:text-5xl sm:text-3xl text-white bg-secondary rounded">
+        {{ requirement.image }}
+      </span>
+    } @else {
+      <!-- Imagen de los Assets -->
+      <img [src]="'assets/images/' + requirement.image">
+    }
+
+    @if (requirement.status) {
+      <!-- Icono Informativo -->
+      <span class="absolute top-0 right-0 material-icons md:text-2xl sm:text-xl text-emerald-500">
+        check_circle
+      </span>
+    }
+
+    @if (requirement.status === false) {
+      <!-- Icono de Alerta -->
+      <span class="absolute top-0 right-0 material-icons md:text-2xl sm:text-xl text-red-500">
+        report_problem
+      </span>
+    }
+  </mat-card-header>
+
+  <!-- Contenido de la Tarjeta -->
+  <mat-card-content class="md:h-20 sm:h-[4.5rem]">
+    <p class="md:text-base sm:text-sm text-primary">
+      {{ requirement.description }}
+    </p>
+  </mat-card-content>
+
+  <!-- Botón para realizar acción (navegar de pantalla o abrir menú lateral) -->
+  <mat-card-actions class="flex justify-center">
+    <button mat-button (click)="onClick()" class="btn-card"
+    >Abrir</button>
+  </mat-card-actions>
+</mat-card>

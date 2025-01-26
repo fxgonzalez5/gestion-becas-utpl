@@ -1,65 +1,36 @@
-import { Component } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
+import { ActivatedRoute, RouterModule } from '@angular/router';
+
+import { RequirementCardComponent } from '../../components/requirement-card/requirement-card.component';
+import { RequirementsService } from '../../services/requirements.service';
+import { Requirement } from '../../interfaces';
+
 
 @Component({
-  imports: [RouterLink, RouterLinkActive],
+  selector: 'panel-requirements-list-page',
+  imports: [RequirementCardComponent, RouterModule],
   templateUrl: './requirements-list-page.component.html',
   styleUrl: './requirements-list-page.component.css',
 })
-export default class RequirementsListPageComponent {
-  cards = [
-    {
-      id: 'form',
-      rutaImg: '../../../../assets/images/form.svg',
-      texto: 'Llenar el formulario de solicitud de la beca.',
-      textoBoton: 'Abrir',
-      ruta: '/auth/grantrequirements',
-    },
-    {
-      id: 'economico',
-      rutaImg: '../../../../assets/images/economico.svg',
-      texto: 'Llenar la ficha socioeconómica.',
-      textoBoton: 'Abrir',
-      ruta: '/auth/grantrequirements',
-    },
-    {
-      id: 'registroCilvi',
-      rutaImg: '../../../../assets/images/registroCilvi.svg',
-      texto:
-        'Cédula(s) de identidad del estudiante y miembros del núcleo familiar. ',
-      textoBoton: 'Validar ',
-      ruta: '/auth/grantrequirements',
-    },
-    {
-      id: 'sri',
-      rutaImg: '../../../../assets/images/sri.svg',
-      texto:
-        'Certificado del SRI de registro o no del RUC del núcleo familiar.',
-      textoBoton: 'Cargar ',
-      ruta: '/auth/grantrequirements',
-    },
-    {
-      id: 'iess',
-      rutaImg: '../../../../assets/images/iess.svg',
-      texto:
-        'Certificado de afiliación o no al IESS del estudiante y de su núcleo familiar.',
-      textoBoton: 'Validar',
-      ruta: '/auth/grantrequirements',
-    },
-    {
-      id: 'consejoJudicatura',
-      rutaImg: '../../../../assets/images/consejoJudicatura.svg',
-      texto: 'Tarjeta de pensión alimenticia.',
-      textoBoton: 'Validar',
-      ruta: '/auth/grantrequirements',
-    },
-    {
-      id: 'ubicacionVivienda',
-      rutaImg: '../../../../assets/images/ubicacionVivienda.svg',
-      texto:
-        'Proporcionar la ubicación de la vivienda donde reside. (aplica a estudiantes de la modalidad presencial)',
-      textoBoton: 'Abrir',
-      ruta: '/auth/grantrequirements',
-    },
-  ];
+export default class RequirementsListPageComponent implements OnInit {
+  private activatedRoute = inject(ActivatedRoute);
+  private requirementsService = inject(RequirementsService);
+
+  private _requirementsList = signal<Requirement[]>([]);
+
+  public requirementsList = computed(() => this._requirementsList());
+
+  ngOnInit() {
+    this.activatedRoute.params.subscribe(
+      ({ id }) => this.loadRequirements(Number(id) ?? 0)
+    );
+  }
+
+  private loadRequirements(scholarshipId: number): void {
+    this.requirementsService.getRequirementsByScholarship(scholarshipId)
+      .subscribe({
+        next: requirements => this._requirementsList.set(requirements),
+        error: error => console.error(error),
+      });
+  }
 }

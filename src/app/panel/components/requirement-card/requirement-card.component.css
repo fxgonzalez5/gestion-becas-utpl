@@ -1,0 +1,18 @@
+mat-card {
+  @apply shadow-md shadow-neutral-400;
+  background-color: #E6E6E6;
+}
+
+mat-card-header, mat-card-content, mat-card-actions {
+  padding: 0;
+}
+
+.btn-card {
+  @apply md:h-9 sm:h-8 px-8 md:text-base sm:text-sm font-medium rounded z-0;
+  background-color: #FEBE10;
+  color: #024272 !important;
+}
+
+.btn-card:hover {
+  color: white !important;
+}

@@ -1,9 +1,9 @@
-<mat-card class="w-[27.5rem] md:w-[21.5rem] mb-2 p-5 md:p-4 group hover:bg-primary hover:text-white transition-all duration-300">
+<mat-card class="md:w-[27.5rem] sm:w-[21.5rem] mb-2 md:p-5 sm:p-4 group hover:bg-primary hover:text-white transition-all duration-300">
   <!-- Encabezado de la Tarjeta -->
-  <mat-card-header class="flex items-center h-[5.5rem] md:h-[4.5rem] mb-2">
+  <mat-card-header class="flex items-center md:h-[5.5rem] sm:h-[4.5rem] mb-2">
 
     <!-- Icono de Material -->
-    <span class="material-icons mr-4 p-2 text-4xl md:text-2xl text-primary bg-secondary rounded group-hover:text-white"
+    <span class="material-icons mr-4 p-2 md:text-4xl sm:text-2xl text-primary bg-secondary rounded group-hover:text-white"
     >{{ scholarship.icon }}</span>
 
     <!-- Texto del Encabezado -->
@@ -16,7 +16,7 @@
   </mat-card-header>
 
   <!-- Contenido de la Tarjeta -->
-  <mat-card-content class="h-20 md:h-[4.5rem] md:text-sm">
+  <mat-card-content class="md:h-20 sm:h-[4.5rem] md:text-base sm:text-sm">
     <p class="inline text-primary group-hover:text-white">
       <span class="font-medium">Dirigido a:</span>
        @if (scholarship.description.length <= 135 ) {
@@ -31,9 +31,10 @@
   </mat-card-content>
 
   <mat-card-actions class="flex justify-end">
-    <a mat-button
-      routerLink=""
-      class="btn-card group-hover:bg-secondary"
-      >Postular</a>
+    <button mat-button
+      (click)="onClick()"
+      class="group-hover:bg-secondary">
+      Postular
+    </button>
   </mat-card-actions>
 </mat-card>
