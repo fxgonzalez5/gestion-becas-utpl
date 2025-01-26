@@ -1,7 +1,7 @@
 import { Requirement } from "./requirement.interface";
 
-export interface RequirementsResponse{
+export interface RequirementsResponse<T extends string> {
   status:         boolean;
-  scholarshipId:  number;
+  [key: string]:  number | any;
   requirements:   Requirement[];
 }

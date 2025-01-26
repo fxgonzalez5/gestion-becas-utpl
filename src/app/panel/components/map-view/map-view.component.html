@@ -1,0 +1,29 @@
+<div class="h-full flex flex-col relative">
+
+  <!-- Mapa -->
+  <div #map class="flex-1"></div>
+
+  <!-- Botones para controlar la interacción con el mapa -->
+  <div class="fixed bottom-20 right-4 flex flex-col items-center gap-2">
+
+    <!-- Botón para aumentar el zoom del mapa -->
+    <span (click)="zoomIn()" class="material-icons p-1 md:text-3xl sm:text-xl bg-primary text-secondary rounded-md shadow-md cursor-pointer">
+      zoom_in
+    </span>
+
+    <!-- Botón para disminuir el zoom del mapa -->
+    <span (click)="zoomOut()" class="material-icons p-1 md:text-3xl sm:text-xl bg-primary text-secondary rounded-md shadow-md cursor-pointer">
+      zoom_out
+    </span>
+
+    <!-- Botón para centrar la ubicación del usuario en el mapa -->
+    <span (click)="flyTo()" class="material-icons p-1 md:text-3xl sm:text-xl bg-primary text-secondary rounded-md shadow-md cursor-pointer">
+      my_location
+    </span>
+
+    <!-- Botón Confirmar la Ubicación del domicilio -->
+    <button class="py-2 px-4 bg-secondary text-primary font-medium rounded-md shadow-md">
+      Confirmar
+    </button>
+  </div>
+</div>

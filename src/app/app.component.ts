@@ -12,21 +12,5 @@ import { MatDialog } from '@angular/material/dialog';
 })
 
 export class AppComponent {
-  private router = inject(Router);
   private authService = inject(AuthService);
-
-  public finishedAuthCheck = computed<boolean>(() => this.authService.authStatus() !== AuthStatus.checking);
-
-  public authStatusChangedEffect = effect(() => {
-    switch (this.authService.authStatus()) {
-      case AuthStatus.checking:
-        return;
-      case AuthStatus.authenticated:
-        this.router.navigateByUrl('/panel');
-        return;
-      case AuthStatus.unauthenticated:
-        this.router.navigateByUrl('/auth');
-        return;
-    }
-  });
 }

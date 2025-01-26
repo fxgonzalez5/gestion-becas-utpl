@@ -1,0 +1,19 @@
+<section class="my-5">
+  <div class="flex flex-wrap justify-between items-center gap-4">
+    @for (item of dynamicInputs(); track item.id) {
+      <panel-custom-input [inputModel]="item" (valueChange)="updateInputValue(item.id, $event)"></panel-custom-input>
+
+      @if (item.id === 1) {
+        <button (click)="addInput()"
+          class="py-2 px-6 bg-emerald-400 hover:bg-emerald-500 transition-colors duration-200 rounded-md text-primary focus:outline-none focus:ring-2 focus:ring-secondary">
+          Agregar
+        </button>
+      } @else {
+        <button (click)="removeInput(item.id)"
+          class="py-2 px-6 bg-red-400 hover:bg-red-500 transition-colors duration-200 rounded-md text-primary focus:outline-none focus:ring-2 focus:ring-secondary">
+          Eliminar
+        </button>
+      }
+    }
+  </div>
+</section>

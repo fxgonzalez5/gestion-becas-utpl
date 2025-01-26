@@ -9,7 +9,7 @@ import { MatSelectModule } from '@angular/material/select';
   templateUrl: './options-menu.component.html',
   styles: `
     mat-select, mat-option {
-      @apply md:text-sm md:h-5
+      @apply md:text-lg sm:text-sm sm:h-5
     }
   `,
 })

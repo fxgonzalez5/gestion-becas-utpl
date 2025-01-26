@@ -1,18 +1,15 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
-import { NavigationEnd, Router, RouterModule, RouterOutlet } from '@angular/router';
 
 import { MatButtonModule } from '@angular/material/button';
-import { filter } from 'rxjs';
 
 import { OptionsMenuComponent } from '../../components/options-menu/options-menu.component';
 import { ScholarshipCardComponent } from '../../components/scholarship-card/scholarship-card.component';
+import { AuthService } from '../../../auth/services/auth.service';
 import { ScholarshipsService } from '../../services/scholarships.service';
 import { Scholarship } from '../../interfaces';
 
 @Component({
   imports: [
-    RouterModule,
-    RouterOutlet,
     OptionsMenuComponent,
     ScholarshipCardComponent,
     MatButtonModule
@@ -21,17 +18,17 @@ import { Scholarship } from '../../interfaces';
   styleUrl: './scholarship-list-page.component.css',
 })
 export default class ScholarshipListPageComponent implements OnInit {
-  private router = inject(Router);
+  private userId = inject(AuthService).currentUser()!.id;
   private scholarshipsService = inject(ScholarshipsService);
 
-  private _currentRoute = signal('');
   private _categories = signal<string[]>(['TODAS']);
+  private _appliedScholarshipId = signal<number>(0);
+  private _scholarships: Scholarship[] = [];
   private _displayedScholarships = signal<Scholarship[]>([]);
+  private readonly _size = 9;
   private _showButton = signal(true);
   private _isShowingAll = signal(false);
-  private readonly _size = 9;
-
-  public data = signal([
+  private data = signal([
     {
       year: 2024,
       academicPeriod: ['ABRIL-AGOSTO', 'OCTUBRE-FEBRERO'],
@@ -43,27 +40,22 @@ export default class ScholarshipListPageComponent implements OnInit {
       modality: [],
     },
   ]).asReadonly();
+
   public filters = signal<string[]>(['Año', 'Período', 'Modalidad']).asReadonly();
   public currentYear = signal<string>(this.data()[0].year.toString());
+  public currentPeriod = signal<string>(this.data()[0].academicPeriod[0]);
+  public currentModality = signal<string>(this.data()[0].modality[0]);
 
-  public currentRoute = computed(() => this._currentRoute());
+  public appliedScholarshipId = computed(() => this._appliedScholarshipId());
   public categories = computed(() => this._categories());
   public displayedScholarships = computed(() => this._displayedScholarships());
   public showButton = computed(() => this._showButton());
   public btnText = computed(() => this._isShowingAll() ? 'Ver menos -' : 'Ver más +');
 
-  constructor() {
-    // Escuchar los cambios de navegación
-    this.router.events.pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe((event: NavigationEnd) => {
-        const route = event.urlAfterRedirects.split('/').slice(-1)[0];
-        this._currentRoute.set(route);
-      });
-  }
-
   ngOnInit(): void {
+    this.checkUserApplication();
+    this.loadScholarships();
     this.updateCategories();
-    this.initializeScholarships();
   }
 
   getOptions(filter: string): string[] {
@@ -82,35 +74,57 @@ export default class ScholarshipListPageComponent implements OnInit {
   }
 
   onFilterChange(value: string, filter: string): void {
-    if (filter === 'Año') {
-      this.currentYear.set(value);
+    switch (filter) {
+      case 'Año':
+        this.currentYear.set(value);
+        break;
+      case 'Período':
+        this.currentPeriod.set(value);
+        break;
+      case 'Modalidad':
+        this.currentModality.set(value);
+        break;
+      case 'Categoría':
+        // Handle category filter change
+        break;
     }
-    //* Se puede manejar el resto de filtros si se requiere
+
+    // TODO: Implementar la consulta de las becas, de acuerdo al filtro
+  }
+
+  private checkUserApplication(): void {
+    this.scholarshipsService.hasUserApplied(this.userId, Number(this.currentYear()), this.currentPeriod())
+      .subscribe((scholarshipId) => {
+        if (scholarshipId > 0) {
+          this._appliedScholarshipId.set(scholarshipId);
+        }
+      });
+  }
+
+  private loadScholarships(): void {
+    this.scholarshipsService.getScholarships()
+      .subscribe((scholarships) => {
+        this._scholarships = scholarships;
+        this._displayedScholarships.set(scholarships.slice(0, this._size));
+      });
+
+    this._showButton.set(this._scholarships.length > this._size);
   }
 
   private updateCategories(): void {
-    const allScholarships = this.scholarshipsService.scholarshipsList();
-    const uniqueCategories = new Set(allScholarships.map((scholarship) => scholarship.category));
+    const uniqueCategories = new Set(this._scholarships.map((scholarship) => scholarship.category));
     this._categories.update((categories) => [...categories, ...uniqueCategories]);
   }
 
-  private initializeScholarships(): void {
-    const allScholarships = this.scholarshipsService.scholarshipsList();
-    this._displayedScholarships.set(allScholarships.slice(0, this._size));
-    this._showButton.set(allScholarships.length > this._size);
-  }
-
   onLoadMore(): void {
-    const allScholarships = this.scholarshipsService.scholarshipsList();
-
     if (this._isShowingAll()) {
       // Ver menos
-      this._displayedScholarships.set(allScholarships.slice(0, this._size));
+      this._displayedScholarships.set(this._scholarships.slice(0, this._size));
       this._isShowingAll.set(false);
       this._showButton.set(true);
     } else {
       // Ver más
-      this._displayedScholarships.set(allScholarships);
+      this._displayedScholarships.set(this._scholarships);
       this._isShowingAll.set(true);
       this._showButton.set(false);
     }

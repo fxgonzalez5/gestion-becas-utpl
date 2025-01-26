@@ -1,0 +1,19 @@
+<p>Ingrese su número de cédula y el de los miembros de su núcleo familiar, luego el RUC (Solo si lo disponen):</p>
+
+<!-- Formulario de Cédulas y RUC -->
+<panel-input-section [inputsList]="inputsList" (inputsChange)="onInputsChange($event)"></panel-input-section>
+
+<p>En caso de tener RUC, presentar la copia de la declaración del impuesto a la RENTA (anual) y del IVA (semestral).</p>
+
+<div class="h-20 flex flex-row gap-4 items-center">
+  <label class="w-12 text-secondary font-normal">RENTA</label>
+  <panel-file-input class="w-full" (fileSelected)="onFileSelected($event, 0)"></panel-file-input>
+</div>
+<div class="h-20 flex flex-row gap-4 items-center">
+  <label class="w-14 text-secondary font-normal">IVA</label>
+  <panel-file-input class="w-full" (fileSelected)="onFileSelected($event, 1)"></panel-file-input>
+</div>
+
+@if (isFileRequired()) {
+  <p class="font-normal text-red-500">Debe adjuntar los documentos solicitados.</p>
+}

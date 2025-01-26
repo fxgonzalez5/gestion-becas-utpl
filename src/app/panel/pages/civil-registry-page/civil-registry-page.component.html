@@ -1,0 +1,11 @@
+<p>Ingrese su número de cédula y el de los miembros de su núcleo familiar:</p>
+
+<!-- Formulario de Cédulas -->
+<panel-input-section [inputsList]="inputsList" (inputsChange)="onInputsChange($event)"></panel-input-section>
+
+<p>
+  Certificado de calamidad doméstica: enfermedad terminal, familiar con discapacidad, defunción. (Solo si aplica)
+  - <a class="text-secondary" href="https://apps.registrocivil.gob.ec/portalCiudadano/login.jsf">Descarga aquí</a>
+</p>
+
+<panel-file-input (fileSelected)="onFileSelected($event)"></panel-file-input>

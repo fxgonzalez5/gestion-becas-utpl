@@ -17,8 +17,8 @@ export class NavigationComponent {
   @Input()
   public onLogout: () => void = () => {};
 
-  public menu = panelRoutes.map((route) => route.children ?? []).flat()
-    .filter((route) => route && route.path);
+  public menu = panelRoutes.map((route) => route ?? []).flat()
+    .filter((route) => route && route.path && !route.path.includes('/'));
 
   public isMenuActive = signal<boolean>(false);
 

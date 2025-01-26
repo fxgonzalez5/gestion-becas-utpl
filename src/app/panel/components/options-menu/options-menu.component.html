@@ -1,6 +1,6 @@
 <div class="flex items-center">
-  <label class="mr-3 text-xl md:text-base text-primary font-medium">{{ label }}:</label>
-  <mat-form-field appearance="outline" [class]="width + ' h-14'">
+  <label class="mr-3 md:text-xl sm:text- text-primary font-medium">{{ label }}:</label>
+  <mat-form-field appearance="outline" [class]="width + ' md:h-14'">
     <mat-select [value]="selectedValue()" (selectionChange)="onSelectionChange($event.value)">
       @for (option of options; track $index) {
         <mat-option [value]="option">{{ option | uppercase }}</mat-option>
