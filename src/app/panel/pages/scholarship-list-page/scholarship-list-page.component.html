@@ -35,7 +35,8 @@
         <div class="flex flex-wrap gap-6">
           @for (scholarship of displayedScholarships(); track scholarship.id) {
             @if (scholarship.is_with_application) {
-              <panel-scholarship-card [scholarship]="scholarship"></panel-scholarship-card>
+              <panel-scholarship-card [scholarship]="scholarship" [currentYear]="currentYear()"
+                [currentPeriod]="currentPeriod()" [currentModality]="currentModality()"></panel-scholarship-card>
             }
           }
         </div>

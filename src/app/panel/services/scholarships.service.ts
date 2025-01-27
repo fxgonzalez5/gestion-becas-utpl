@@ -52,4 +52,24 @@ export class ScholarshipsService {
         catchError(e => throwError(() => e.error.message))
       );
   }
+
+  // Método para postular a una beca
+  applyScholarship(userId: string, scholarshipId: number, year: number, period: string, modality: string): Observable<boolean> {
+    const url = `${this.baseUrl}/application`;
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`)
+
+    const body = {
+      user_id: userId,
+      scholarship_id: scholarshipId,
+      year: year,
+      period: period,
+      modality: modality
+    };
+
+    return this.http.post(url, body, { headers }).pipe(
+      map(() => true),
+      catchError((e) => throwError(() => e.error.message))
+    );
+  }
 }

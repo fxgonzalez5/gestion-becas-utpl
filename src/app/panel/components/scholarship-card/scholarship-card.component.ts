@@ -6,6 +6,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import Swal from 'sweetalert2'
 
+import { AuthService } from '../../../auth/services/auth.service';
 import { ScholarshipsService } from '../../services/scholarships.service';
 import { Scholarship } from '../../interfaces';
 
@@ -18,12 +19,19 @@ import { Scholarship } from '../../interfaces';
 export class ScholarshipCardComponent implements OnInit {
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
+  private userId = inject(AuthService).currentUser()!.id;
   private scholarshipsService = inject(ScholarshipsService);
 
   private appliedScholarshipId = this.scholarshipsService.appliedScholarshipId();
 
   @Input()
   public scholarship!: Scholarship;
+  @Input()
+  public currentYear!: string;
+  @Input()
+  public currentPeriod!: string;
+  @Input()
+  public currentModality!: string;
 
   ngOnInit(): void {
     if (!this.scholarship) {
@@ -71,8 +79,16 @@ export class ScholarshipCardComponent implements OnInit {
       cancelButtonText: 'Cancelar'
     }).then((result) => {
       if (result.isConfirmed) {
-        // TODO: Implementar la lógica de postulación
+        this.applyForScholarship();
       }
     });
+  }
+
+  private applyForScholarship(): void {
+    this.scholarshipsService.applyScholarship(this.userId, this.scholarship.id, Number(this.currentYear), this.currentPeriod, this.currentModality)
+      .subscribe( {
+        next: () => this.router.navigate([this.scholarship.id, 'requirements'], { relativeTo: this.activatedRoute }),
+        error: () => alert('Hubo un error al postular por la beca. Por favor, inténtalo de nuevo más tarde.')
+      });
   }
 }
