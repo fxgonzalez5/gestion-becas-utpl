@@ -1,10 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { inject, Injectable } from '@angular/core';
+import { computed, inject, Injectable, signal } from '@angular/core';
 
 import { catchError, map, Observable, throwError } from 'rxjs';
 
 import { environment } from '@environments/environment';
-import { Scholarship, ScholarshipsResponse } from '../interfaces';
+import { PostulationResponse, Scholarship, ScholarshipsResponse } from '../interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +12,10 @@ import { Scholarship, ScholarshipsResponse } from '../interfaces';
 export class ScholarshipsService {
   private readonly baseUrl:string = environment.baseUrl;
   private http = inject(HttpClient);
+
+  private _appliedScholarshipId = signal<number>(0);
+
+  public appliedScholarshipId = computed(() => this._appliedScholarshipId());
 
   // Método para obtener las becas
   getScholarships(): Observable<Scholarship[]> {
@@ -29,6 +33,21 @@ export class ScholarshipsService {
           }));
 
           return transformedScholarships
+        }),
+        catchError(e => throwError(() => e.error.message))
+      );
+  }
+
+  // Método para verificar si el usuario ha postulado
+  hasUserApplied(userId: string, year: number, period: string): Observable<void> {
+    const url = `${this.baseUrl}/application/${userId}/${year}/${period}`;
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    return this.http.get<PostulationResponse>(url, { headers })
+      .pipe(
+        map(response => {
+          this._appliedScholarshipId.set(response.scholarshipId);
         }),
         catchError(e => throwError(() => e.error.message))
       );

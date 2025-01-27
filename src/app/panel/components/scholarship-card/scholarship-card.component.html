@@ -33,8 +33,9 @@
   <mat-card-actions class="flex justify-end">
     <button mat-button
       (click)="onClick()"
-      class="btn-card group-hover:bg-secondary">
-      Postular
+      [ngClass]="getButtonClass()"
+      class="group-hover:bg-secondary">
+      {{ getButtonText() }}
     </button>
   </mat-card-actions>
 </mat-card>

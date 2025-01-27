@@ -6,6 +6,7 @@ import { filter } from 'rxjs';
 
 import { OptionsMenuComponent } from '../../components/options-menu/options-menu.component';
 import { ScholarshipCardComponent } from '../../components/scholarship-card/scholarship-card.component';
+import { AuthService } from '../../../auth/services/auth.service';
 import { ScholarshipsService } from '../../services/scholarships.service';
 import { Scholarship } from '../../interfaces';
 
@@ -13,26 +14,27 @@ import { Scholarship } from '../../interfaces';
   imports: [
     RouterModule,
     RouterOutlet,
+    MatButtonModule,
     OptionsMenuComponent,
     ScholarshipCardComponent,
-    MatButtonModule
   ],
   templateUrl: './scholarship-list-page.component.html',
   styleUrl: './scholarship-list-page.component.css',
 })
 export default class ScholarshipListPageComponent implements OnInit {
   private router = inject(Router);
+  private userId = inject(AuthService).currentUser()!.id;
   private scholarshipsService = inject(ScholarshipsService);
 
   private _currentRoute = signal('');
   private _categories = signal<string[]>(['TODAS']);
   private _scholarships: Scholarship[] = [];
   private _displayedScholarships = signal<Scholarship[]>([]);
+  private readonly _size = 9;
   private _showButton = signal(true);
   private _isShowingAll = signal(false);
-  private readonly _size = 9;
 
-  public data = signal([
+  private data = signal([
     {
       year: 2024,
       academicPeriod: ['ABRIL-AGOSTO', 'OCTUBRE-FEBRERO'],
@@ -44,8 +46,11 @@ export default class ScholarshipListPageComponent implements OnInit {
       modality: [],
     },
   ]).asReadonly();
+
   public filters = signal<string[]>(['Año', 'Período', 'Modalidad']).asReadonly();
   public currentYear = signal<string>(this.data()[0].year.toString());
+  public currentPeriod = signal<string>(this.data()[0].academicPeriod[0]);
+  public currentModality = signal<string>(this.data()[0].modality[0]);
 
   public currentRoute = computed(() => this._currentRoute());
   public categories = computed(() => this._categories());
@@ -63,6 +68,7 @@ export default class ScholarshipListPageComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.checkUserApplication();
     this.loadScholarships();
     this.updateCategories();
   }
@@ -83,10 +89,26 @@ export default class ScholarshipListPageComponent implements OnInit {
   }
 
   onFilterChange(value: string, filter: string): void {
-    if (filter === 'Año') {
-      this.currentYear.set(value);
+    switch (filter) {
+      case 'Año':
+        this.currentYear.set(value);
+      break;
+      case 'Período':
+        this.currentPeriod.set(value);
+        break;
+      case 'Modalidad':
+        this.currentModality.set(value);
+        break;
+      case 'Categoría':
+        // Handle category filter change
+        break;
     }
-    //* Se puede manejar el resto de filtros si se requiere
+
+    // TODO: Implementar la consulta de las becas, de acuerdo al filtro
+  }
+
+  private checkUserApplication(): void {
+    this.scholarshipsService.hasUserApplied(this.userId, Number(this.currentYear()), this.currentPeriod()).subscribe();
   }
 
   private loadScholarships(): void {
