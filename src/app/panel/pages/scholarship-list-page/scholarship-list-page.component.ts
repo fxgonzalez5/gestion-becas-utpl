@@ -1,5 +1,4 @@
 import { Component, computed, inject, OnInit, signal } from '@angular/core';
-import { NavigationEnd, Router, RouterModule, RouterOutlet } from '@angular/router';
 
 import { MatButtonModule } from '@angular/material/button';
 import { filter } from 'rxjs';
@@ -12,8 +11,6 @@ import { Scholarship } from '../../interfaces';
 
 @Component({
   imports: [
-    RouterModule,
-    RouterOutlet,
     MatButtonModule,
     OptionsMenuComponent,
     ScholarshipCardComponent,
@@ -22,11 +19,9 @@ import { Scholarship } from '../../interfaces';
   styleUrl: './scholarship-list-page.component.css',
 })
 export default class ScholarshipListPageComponent implements OnInit {
-  private router = inject(Router);
   private userId = inject(AuthService).currentUser()!.id;
   private scholarshipsService = inject(ScholarshipsService);
 
-  private _currentRoute = signal('');
   private _categories = signal<string[]>(['TODAS']);
   private _scholarships: Scholarship[] = [];
   private _displayedScholarships = signal<Scholarship[]>([]);
@@ -52,20 +47,10 @@ export default class ScholarshipListPageComponent implements OnInit {
   public currentPeriod = signal<string>(this.data()[0].academicPeriod[0]);
   public currentModality = signal<string>(this.data()[0].modality[0]);
 
-  public currentRoute = computed(() => this._currentRoute());
   public categories = computed(() => this._categories());
   public displayedScholarships = computed(() => this._displayedScholarships());
   public showButton = computed(() => this._showButton());
   public btnText = computed(() => this._isShowingAll() ? 'Ver menos -' : 'Ver más +');
-
-  constructor() {
-    // Escuchar los cambios de navegación
-    this.router.events.pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe((event: NavigationEnd) => {
-        const route = event.urlAfterRedirects.split('/').slice(-1)[0];
-        this._currentRoute.set(route);
-      });
-  }
 
   ngOnInit(): void {
     this.checkUserApplication();

@@ -10,6 +10,7 @@ export const routes: Routes = [
   {
     path: 'panel',
     canActivate: [privateGuard],
+    loadComponent: () => import('./panel/layouts/panel-layout/panel-layout.component'),
     loadChildren: () => import('./panel/panel.routing').then(r => r.panelRoutes),
   },
   { path: '**', redirectTo: 'auth' }

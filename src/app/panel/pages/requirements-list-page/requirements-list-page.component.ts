@@ -25,15 +25,21 @@ export default class RequirementsListPageComponent implements OnInit {
   public requirementsList = computed(() => this._requirementsList());
 
   ngOnInit() {
-    const userId = this.authService.currentUser()!.id;
-    const applicationId = this.scholarshipsService.appliedScholarshipId();
-    if (applicationId) {
-      this.loadRequirements(0, applicationId, userId);
-    } else {
-      this.activatedRoute.params.subscribe(
-        ({ id }) => this.loadRequirements(Number(id) ?? 0)
-      );
-    }
+    this.activatedRoute.url.subscribe(url => {
+      const lastSegment = url[url.length - 1].path;
+
+      if (lastSegment === 'requirements') {
+        const userId = this.authService.currentUser()!.id;
+        const applicationId = this.scholarshipsService.appliedScholarshipId();
+        if (applicationId) {
+          this.loadRequirements(0, applicationId, userId);
+        } else {
+          this.activatedRoute.params.subscribe(
+            ({ id }) => this.loadRequirements(Number(id) ?? 0)
+          );
+        }
+      }
+    });
   }
 
   private loadRequirements(scholarshipId: number, applicationId?: number, userId?: string): void {
