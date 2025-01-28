@@ -4,6 +4,8 @@ import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import { firstValueFrom } from 'rxjs';
 
 import { ValidationService } from '@shared/services/validation.service';
+import { ScholarshipsService } from '../../services/scholarships.service';
+import { RequirementsService } from '../../services/requirements.service';
 
 @Component({
   imports: [RouterModule],
@@ -14,10 +16,16 @@ export default class ValidationLayoutComponent implements OnInit, OnDestroy {
   private router = inject(Router);
   private activatedRoute = inject(ActivatedRoute);
   private validationService = inject(ValidationService);
+  private requirementsService = inject(RequirementsService);
+
+  private applicationId = inject(ScholarshipsService).appliedScholarshipId();
+  private requirementId: number | null = null;
 
   ngOnInit(): void {
     const idRequirement = sessionStorage.getItem('requirementId');
-    console.log('ID del requerimiento:', idRequirement);
+    if (idRequirement) {
+      this.requirementId = Number(idRequirement);
+    }
   }
 
   ngOnDestroy(): void {
@@ -32,8 +40,8 @@ export default class ValidationLayoutComponent implements OnInit, OnDestroy {
       // Ejecutar la función de validación
       const [status, load_documentation] = await validateFn();
 
-      // TODO: Enviar el resultado de la validación al backend
-      console.log('Resultado de la validación:', status, load_documentation);
+      // Validar el requerimiento
+      this.validateRequirement(status, load_documentation);
     } catch (error) {
       console.error('Error durante la validación:', error);
     }
@@ -48,5 +56,15 @@ export default class ValidationLayoutComponent implements OnInit, OnDestroy {
       .join('/');
 
     this.router.navigateByUrl(afterUrl, { replaceUrl: true });
+  }
+
+  private validateRequirement(status: boolean, load_documentation: boolean | null): void {
+    if (this.applicationId === 0 || this.requirementId === null) return;
+
+    this.requirementsService.updateRequirementStatus(this.applicationId, this.requirementId, status, load_documentation)
+    .subscribe( {
+      next: () => { if (status) this.goBack(); },
+      error: () => alert('Hubo un error al validar el requerimiento. Por favor, inténtalo de nuevo más tarde.')
+    });
   }
 }

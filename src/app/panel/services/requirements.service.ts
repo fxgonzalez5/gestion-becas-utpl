@@ -36,4 +36,15 @@ export class RequirementsService {
         catchError(e => throwError(() => e.error.message))
       );
   }
+
+  updateRequirementStatus(applicationId: number, requirementId: number, status: boolean, load_documentation: boolean | null): Observable<boolean> {
+    const url = `${this.baseUrl}/application/${applicationId}/requirements/${requirementId}`;
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    return this.http.put(url, {status, load_documentation}, { headers }).pipe(
+      map(() => true),
+      catchError(e => throwError(() => e.error.message))
+    );
+  }
 }
