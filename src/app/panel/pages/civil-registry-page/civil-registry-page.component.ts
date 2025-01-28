@@ -5,7 +5,9 @@ import { firstValueFrom } from 'rxjs';
 import { ValidationService } from '@shared/services/validation.service';
 import { InputSectionComponent } from '../../components/input-section/input-section.component';
 import { FileInputComponent } from '../../components/file-input/file-input.component';
+import { AuthService } from '../../../auth/services/auth.service';
 import { CivilRegistryService } from '../../services/civil-registry.service';
+import { FileUploadService } from '../../services/file-upload.service';
 import { Citizen, InputModel } from '../../interfaces';
 
 @Component({
@@ -14,8 +16,10 @@ import { Citizen, InputModel } from '../../interfaces';
   styleUrls: ['./civil-registry-page.component.css'],
 })
 export default class CivilRegistryPageComponent implements OnInit {
+  private userId = inject(AuthService).currentUser()!.id;
   private civilRegistryService = inject(CivilRegistryService);
   private validationService = inject(ValidationService);
+  private fileUploadService = inject(FileUploadService);
 
   public inputsList: InputModel[] = [
     { id: 1, icon: 'badge', placeholder: 'Número de cédula', type: 'text', value: '', iconStatus: '' }
@@ -105,12 +109,24 @@ export default class CivilRegistryPageComponent implements OnInit {
     return surnames;
   }
 
+  private async uploadFile(file: File): Promise<boolean> {
+    try {
+      return await this.fileUploadService.uploadCivilRegistryFile(file, this.userId);
+    } catch (error) {
+      console.error(error);
+      return false;
+    }
+  }
+
   private async onConfirm(): Promise<[boolean, boolean | null]> {
     // Ejecutar la validación de los inputs
     const isValid = await this.validateInputs();
     let savedFile = false;
 
-    // TODO: Guardar archivo si se ha seleccionado uno y retornar el resultado al backend
+    // Si la validación de los inputs es correcta, guardar el archivo si fue cargado
+    if (isValid && this._selectedFile) {
+      savedFile = await this.uploadFile(this._selectedFile);
+    }
 
     // Retornar el resultado de la validación y si se guardó algún archivo
     return [isValid, savedFile];
