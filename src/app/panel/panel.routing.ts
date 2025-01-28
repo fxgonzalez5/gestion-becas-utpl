@@ -8,5 +8,6 @@ export const panelRoutes: Routes = [
     loadComponent: () => import('./pages/scholarship-list-page/scholarship-list-page.component'),
   },
   { path: 'scholarships/:id/requirements', loadComponent: () => import('./pages/requirements-list-page/requirements-list-page.component') },
+  { path: 'scholarships/:id/requirements/form', loadComponent: () => import('./pages/form-page/form-page.component') },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
 ];
