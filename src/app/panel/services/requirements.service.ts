@@ -18,7 +18,19 @@ export class RequirementsService {
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
-    return this.http.get<RequirementsResponse>(url, { headers })
+    return this.http.get<RequirementsResponse<'scholarship_id'>>(url, { headers })
+      .pipe(
+        map(response => response.requirements),
+        catchError(e => throwError(() => e.error.message))
+      );
+  }
+
+  getRequirementsByApplication(applicationId: number, userId: string): Observable<Requirement[]> {
+    const url = `${this.baseUrl}/application/${applicationId}/requirements/${userId}`;
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    return this.http.get<RequirementsResponse<'application_id'>>(url, { headers })
       .pipe(
         map(response => response.requirements),
         catchError(e => throwError(() => e.error.message))
