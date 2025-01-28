@@ -1,0 +1,28 @@
+<div class="absolute top-0 pt-[4.5rem] pb-12 h-full w-full flex">
+
+  <!-- Fondo -->
+  <section class="flex flex-1 justify-end">
+
+    <!-- Ventana Emergente -->
+    <div class="w-1/3 bg-white shadow-[-5px_0_10px_-0px_rgba(0,0,0,0.25)] rounded-l-[2.5rem]">
+
+      <!-- Contenido -->
+      <div class="h-full p-10 flex flex-col font-medium">
+
+        <!-- Botón para Cerrar -->
+        <div class="flex justify-end">
+          <span (click)="goBack()" class="material-icons md:text-4xl sm:text-xl mb-5 cursor-pointer">close</span>
+        </div>
+
+        <router-outlet></router-outlet>
+
+        <!-- Botón para validar los inputs de las páginas hijas -->
+        <div class="flex justify-end">
+          <button (click)="onConfirm()" class="w-fit py-2 px-6 bg-secondary text-primary hover:text-white rounded-md">
+            Confirmar
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>

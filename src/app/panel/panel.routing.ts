@@ -7,7 +7,19 @@ export const panelRoutes: Routes = [
     title: 'Solicitud',
     loadComponent: () => import('./pages/scholarship-list-page/scholarship-list-page.component'),
   },
-  { path: 'scholarships/:id/requirements', loadComponent: () => import('./pages/requirements-list-page/requirements-list-page.component') },
+  {
+    path: 'scholarships/:id/requirements',
+    loadComponent: () => import('./pages/requirements-list-page/requirements-list-page.component'),
+    children: [
+      {
+        path: 'validation',
+        loadComponent: () => import('./layouts/validation-layout/validation-layout.component'),
+        children: [
+          { path: 'civil-registry', loadComponent: () => import('./pages/civil-registry-page/civil-registry-page.component') },
+        ]
+      },
+    ]
+  },
   { path: 'scholarships/:id/requirements/form', loadComponent: () => import('./pages/form-page/form-page.component') },
   { path: 'scholarships/:id/requirements/map', loadComponent: () => import('./pages/map-page/map-page.component') },
   { path: '', redirectTo: 'home', pathMatch: 'full' },

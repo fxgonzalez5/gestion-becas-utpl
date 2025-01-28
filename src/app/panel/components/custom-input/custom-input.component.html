@@ -1,0 +1,9 @@
+<div class="flex items-center">
+  <div class="flex items-center py-1 px-3 border border-black rounded-md focus-within:ring-2 focus-within:ring-secondary">
+    <span class="material-icons mr-3 text-primary text-3xl">{{ inputModel.icon }}</span>
+    <input [type]="inputModel.type" [placeholder]="inputModel.placeholder"
+      (input)="onInputChange($event)" [value]="inputModel.value"
+      class="font-normal focus:outline-none focus:ring-0 focus:border-transparent"/>
+  </div>
+  <span class="material-icons ml-3 text-secondary text-3xl">{{ inputModel.iconStatus }}</span>
+</div>

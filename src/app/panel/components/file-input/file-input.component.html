@@ -1,0 +1,14 @@
+<div class="w-4/6 grid grid-cols-[auto,1fr] gap-0 my-5 h-12">
+
+  <!-- Recuadro Izquierdo -->
+  <div class="flex items-center px-3 border border-black border-r-0 rounded-l-md cursor-pointer">
+    <span class="material-icons text-3xl text-primary mr-2">upload</span>
+    <label for="file-upload" class="cursor-pointer font-normal text-primary">Cargar archivo</label>
+  </div>
+
+  <!-- Recuadro Derecho -->
+  <div class="flex items-center px-3 border border-black rounded-r-md">
+    <input id="file-upload" type="file" class="hidden" accept=".pdf" (change)="onFileSelected($event)"/>
+    <span class="truncate font-normal">{{ selectedFileName() }}</span>
+  </div>
+</div>
