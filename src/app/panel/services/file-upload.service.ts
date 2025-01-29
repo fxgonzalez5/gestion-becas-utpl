@@ -31,4 +31,10 @@ export class FileUploadService {
     const response = await this.uploadFile(file, 'registro_civil', userId);
     return response.status;
   }
+
+  // Subir archivo de SRI
+  async uploadSriFile(file: File, userId: string, type: string): Promise<boolean> {
+    const response = await this.uploadFile(file, 'sri', `${userId}_${type}` );
+    return response.status;
+  }
 }

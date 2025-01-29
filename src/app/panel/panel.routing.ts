@@ -16,6 +16,7 @@ export const panelRoutes: Routes = [
         loadComponent: () => import('./layouts/validation-layout/validation-layout.component'),
         children: [
           { path: 'civil-registry', loadComponent: () => import('./pages/civil-registry-page/civil-registry-page.component') },
+          { path: 'sri', loadComponent: () => import('./pages/sri-page/sri-page.component') },
         ]
       },
     ]
