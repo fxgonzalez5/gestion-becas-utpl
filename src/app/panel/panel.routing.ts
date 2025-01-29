@@ -17,6 +17,7 @@ export const panelRoutes: Routes = [
         children: [
           { path: 'civil-registry', loadComponent: () => import('./pages/civil-registry-page/civil-registry-page.component') },
           { path: 'sri', loadComponent: () => import('./pages/sri-page/sri-page.component') },
+          { path: 'iess', loadComponent: () => import('./pages/iess-page/iess-page.component') },
         ]
       },
     ]
