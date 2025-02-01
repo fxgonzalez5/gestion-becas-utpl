@@ -17,6 +17,13 @@ export class ScholarshipsService {
 
   public appliedScholarshipId = computed(() => this._appliedScholarshipId());
 
+  constructor() {
+    const appliedScholarshipId = sessionStorage.getItem('appliedScholarshipId');
+    if (appliedScholarshipId) {
+      this._appliedScholarshipId.set(Number(appliedScholarshipId));
+    }
+  }
+
   // Método para obtener las becas
   getScholarships(): Observable<Scholarship[]> {
     const url = `${this.baseUrl}/scholarship/all`;
@@ -48,6 +55,7 @@ export class ScholarshipsService {
       .pipe(
         map(response => {
           this._appliedScholarshipId.set(response.scholarshipId);
+          sessionStorage.setItem('appliedScholarshipId', response.scholarshipId.toString());
         }),
         catchError(e => throwError(() => e.error.message))
       );

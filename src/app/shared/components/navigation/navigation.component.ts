@@ -1,4 +1,4 @@
-import { Component, Input, signal } from '@angular/core';
+import { Component, Input, OnInit, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { panelRoutes } from '../../../panel/panel.routing';
 import { MenuComponent } from '../menu/menu.component';
@@ -13,7 +13,7 @@ import { MenuComponent } from '../menu/menu.component';
     }
   `,
 })
-export class NavigationComponent {
+export class NavigationComponent implements OnInit {
   @Input()
   public onLogout: () => void = () => {};
 
@@ -22,15 +22,25 @@ export class NavigationComponent {
 
   public isMenuActive = signal<boolean>(false);
 
+  ngOnInit(): void {
+    // Recuperar estado del menú
+    const savedState = sessionStorage.getItem('isMenuActive');
+    if (savedState !== null) {
+      this.isMenuActive.set(savedState === 'true');
+    }
+  }
+
   preventDefault(event: MouseEvent): void {
     event.preventDefault();
   }
 
   onMenuOptionSelected(): void {
     this.isMenuActive.set(true);
+    sessionStorage.setItem('isMenuActive', 'true');
   }
 
   onMenuClose(): void {
     this.isMenuActive.set(false);
+    sessionStorage.setItem('isMenuActive', 'false');
   }
 }

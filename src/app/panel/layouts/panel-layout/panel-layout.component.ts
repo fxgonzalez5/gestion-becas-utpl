@@ -18,5 +18,7 @@ export default class PanelLayoutComponent {
 
   onLogout() {
     this.authService.logout();
+    localStorage.clear();
+    sessionStorage.clear();
   }
 }
