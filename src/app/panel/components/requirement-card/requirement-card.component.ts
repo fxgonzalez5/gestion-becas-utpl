@@ -36,12 +36,12 @@ export class RequirementCardComponent implements OnInit{
     if (this.requirement.route.includes('http')) {
       window.open(this.requirement.route, '_blank');
     } else {
+      sessionStorage.setItem('requirementId', this.requirement.id.toString());
+
       if (['form', 'map'].includes(this.requirement.route)) {
         this.router.navigate([this.requirement.route], { relativeTo: this.activatedRoute });
         return;
       }
-      
-      sessionStorage.setItem('requirementId', this.requirement.id.toString());
       this.router.navigate(['validation', this.requirement.route], { relativeTo: this.activatedRoute });
     }
   }

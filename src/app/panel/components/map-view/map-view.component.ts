@@ -1,9 +1,15 @@
-import { AfterViewInit, Component, ElementRef, inject, OnDestroy, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, inject, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { LngLat, Map, Marker } from 'mapbox-gl';
+import { firstValueFrom } from 'rxjs';
 
 import { environment } from '@environments/environment';
+import { AuthService } from '../../../auth/services/auth.service';
 import { LocationService } from '../../services/location.service';
+import { ScholarshipsService } from '../../services/scholarships.service';
+import { RequirementsService } from '../../services/requirements.service';
+import { Location } from '../../interfaces';
 
 @Component({
   imports: [],
@@ -11,10 +17,16 @@ import { LocationService } from '../../services/location.service';
   templateUrl: './map-view.component.html',
   styleUrl: './map-view.component.css',
 })
-export class MapViewComponent implements AfterViewInit, OnDestroy {
+export class MapViewComponent implements OnInit, AfterViewInit, OnDestroy {
   private readonly accessToken:string = environment.mapboxKey;
-
+  private router = inject(Router);
+  private activatedRoute = inject(ActivatedRoute);
+  private user = inject(AuthService).currentUser()!;
   private locationService = inject(LocationService);
+  private requirementsService = inject(RequirementsService);
+  private scholarshipsService = inject(ScholarshipsService);
+
+  private requirementId: number | null = null;
 
   @ViewChild('map')
   public divMap?: ElementRef;
@@ -22,8 +34,11 @@ export class MapViewComponent implements AfterViewInit, OnDestroy {
   public map?: Map;
   public marker?: Marker;
 
-  get isUserLocationReady(): boolean {
-    return this.locationService.isUserLocationReady;
+  ngOnInit(): void {
+    const idRequirement = sessionStorage.getItem('requirementId');
+    if (idRequirement) {
+      this.requirementId = Number(idRequirement);
+    }
   }
 
   ngAfterViewInit(): void {
@@ -129,5 +144,48 @@ export class MapViewComponent implements AfterViewInit, OnDestroy {
     const [lng, lat] = plainMarker;
     this.map!.setCenter(new LngLat(lng, lat));
     this.createMarker(new LngLat(lng, lat));
+  }
+
+  async onConfirm(): Promise<void> {
+    if (!this.marker) return;
+
+    const location = await this.fetchAddress(this.marker.getLngLat());
+    if (!location) return;
+
+    this.locationService.saveUserLocation(this.user.id, location)
+      .subscribe( {
+        next: (success) => this.validateRequirement(success),
+        error: () => alert('Hubo un error al guardar la ubicación. Por favor, inténtalo de nuevo más tarde.')
+      });
+  }
+
+  async fetchAddress(lngLat: LngLat): Promise<Location | null> {
+    const coords = lngLat.toArray();
+
+    try {
+      const userAddress = await firstValueFrom(this.locationService.getUserAddress(coords));
+      return userAddress;
+    } catch (error) {
+      console.error(error);
+      return null;
+    }
+  }
+
+  private validateRequirement(status: boolean): void {
+    if (this.scholarshipsService.appliedScholarshipId() === 0 || this.requirementId === null) return;
+
+    this.requirementsService.updateRequirementStatus(this.scholarshipsService.appliedScholarshipId(), this.requirementId, status, null)
+    .subscribe( {
+      next: () => {
+        const afterUrl = this.activatedRoute.snapshot.pathFromRoot
+            .flatMap(route => route.url)
+            .map(segment => segment.path)
+            .slice(0, -1)
+            .join('/');
+
+        this.router.navigateByUrl(afterUrl);
+      },
+      error: () => alert('Hubo un error al validar el requerimiento. Intente de nuevo.')
+    });
   }
 }
