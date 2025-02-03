@@ -24,5 +24,10 @@ export const panelRoutes: Routes = [
   },
   { path: 'scholarships/:id/requirements/form', loadComponent: () => import('./pages/form-page/form-page.component') },
   { path: 'scholarships/:id/requirements/map', loadComponent: () => import('./pages/map-page/map-page.component') },
+  {
+    path: 'applications',
+    title: 'Seguimiento',
+    loadComponent: () => import('./pages/scholarship-applications-page/scholarship-applications-page.component'),
+  },
   { path: '', redirectTo: 'home', pathMatch: 'full' },
 ];

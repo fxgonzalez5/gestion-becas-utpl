@@ -4,7 +4,7 @@ import { computed, inject, Injectable, signal } from '@angular/core';
 import { catchError, map, Observable, throwError } from 'rxjs';
 
 import { environment } from '@environments/environment';
-import { PostulationResponse, Scholarship, ScholarshipsResponse } from '../interfaces';
+import { Application, ApplicationsResponse, PostulationResponse, Scholarship, ScholarshipsResponse } from '../interfaces';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +14,8 @@ export class ScholarshipsService {
   private http = inject(HttpClient);
 
   private _appliedScholarshipId = signal<number>(0);
+
+  public activeRequirements = signal<boolean>(false);
 
   public appliedScholarshipId = computed(() => this._appliedScholarshipId());
 
@@ -79,5 +81,26 @@ export class ScholarshipsService {
       map(() => true),
       catchError((e) => throwError(() => e.error.message))
     );
+  }
+
+  // Método para obtener las postulaciones de un usuario
+  getApplications(userId: string): Observable<Application[]> {
+    const url = `${this.baseUrl}/application/user/${userId}`;
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    return this.http.get<ApplicationsResponse>(url, { headers })
+      .pipe(
+        map(response => {
+          // Transformación de los datos de la respuesta
+          const transformedApplications = response.applications.map(application => ({
+            ...application,
+            status: application.status === null ? 'En Revisión' : application.status ? 'Beca Asignada' : 'Beca Rechazada',
+          }));
+
+          return transformedApplications;
+        }),
+        catchError(e => throwError(() => e.error.message))
+      );
   }
 }

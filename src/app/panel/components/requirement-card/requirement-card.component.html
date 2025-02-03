@@ -44,7 +44,7 @@
 
   <!-- Botón para realizar acción (navegar de pantalla o abrir menú lateral) -->
   <mat-card-actions class="flex justify-center">
-    <button mat-button (click)="onClick()" class="btn-card"
+    <button mat-button (click)="onClick()" [disabled]="!buttonActive" class="btn-card"
     >{{ textButton() }}</button>
   </mat-card-actions>
 </mat-card>

@@ -24,6 +24,10 @@ export default class RequirementsListPageComponent implements OnInit {
 
   public requirementsList = computed(() => this._requirementsList());
 
+  public get activeRequirement(): boolean {
+    return this.scholarshipsService.activeRequirements();
+  }
+
   ngOnInit() {
     this.activatedRoute.url.subscribe(url => {
       const lastSegment = url[url.length - 1].path;

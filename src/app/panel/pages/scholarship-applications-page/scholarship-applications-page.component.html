@@ -1,0 +1,70 @@
+<div class="h-full flex flex-col md:my-6 sm:my-4 mx-8">
+
+  <!-- Título -->
+  <h2 class="md:text-3xl sm:text-2xl text-primary font-medium">Requisitos de solicitudes de becas</h2>
+
+  <!-- Línea divisoria -->
+  <hr class="mt-4 border border-primary"/>
+
+  <!-- Sección de tabla -->
+  <section class="flex-1 flex flex-col min-h-0">
+
+    <!-- Tabla -->
+    <div class="overflow-x-auto">
+      <table class="w-full bg-white border-separate border-spacing-y-4">
+
+        <!-- Encabezado -->
+        <thead class="bg-primary text-white text-center text-lg leading-6">
+          <tr>
+            <th class="py-2 px-4 font-medium rounded-l-md w-24">AÑO</th>
+            <th class="py-2 px-4 font-medium w-44">PERÍODO</th>
+            <th class="py-2 px-4 font-medium w-36">MODALIDAD</th>
+            <th class="py-2 px-4 font-medium w-44">TIPO DE BECA</th>
+            <th class="py-2 px-4 font-medium w-40">FECHA DE SOLICITUD</th>
+            <th class="py-2 px-4 font-medium w-44">ESTADO DE SOLICITUD</th>
+            <th class="py-2 px-4 font-medium">OBSERVACIONES</th>
+            <th colspan="2" class="py-2 px-4 font-medium">ACCIONES</th>
+            <th class="py-2 px-4 font-medium w-44 rounded-r-md">FORMULARIO</th>
+          </tr>
+        </thead>
+
+        <!-- Cuerpo de la Tabla -->
+        <tbody>
+          @for (record of applicationsList(); track record.application_id) {
+            <tr class="bg-surface text-center text-lg leading-6">
+              <td class="py-2 px-4 rounded-l-md">{{ record.year }}</td>
+              <td class="py-2 px-4">{{ record.period }}</td>
+              <td class="py-2 px-4">{{ record.modality }}</td>
+              <td class="py-2 px-4">{{ record.scholarship_type }}</td>
+              <td class="py-2 px-4">{{
+                ((record.application_date| date: "d 'de' MMMM")!.split(' ') | slice: 0:-1).join(' ') +
+                ' ' + ((record.application_date | date: "d 'de' MMMM")!.split(' ').slice(-1)[0] | titlecase)
+              }}</td>
+              <td class="py-2 px-4">{{ record.status }}</td>
+              <td class="py-2 px-4 rounded-r-md text-left">{{ record.observations === null ? 'Ninguna' : record.observations }}</td>
+
+              <!-- Acciones -->
+              <td class="w-44 bg-white">
+                <button (onclick)="onClick(record.scholarship_id)" class="py-5 px-5 rounded-md text-primary bg-green-400 hover:bg-green-500">
+                  Ver / Modificar
+                </button>
+              </td>
+              <td class="w-32 bg-white">
+                <button class="py-5 px-10 rounded-md text-primary bg-red-400 hover:bg-red-500">
+                  Borrar
+                </button>
+              </td>
+
+              <!-- Generar PDF -->
+              <td class="bg-white">
+                <button class="py-5 px-8 rounded-md text-primary bg-yellow-400 hover:bg-yellow-500">
+                  Generar PDF
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+</div>
