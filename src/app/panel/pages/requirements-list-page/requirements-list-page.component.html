@@ -13,7 +13,7 @@
     <div class="flex-1 overflow-y-auto">
       <div class="flex flex-wrap gap-6">
         @for (requirement of requirementsList(); track requirement.id) {
-          <panel-requirement-card [requirement]="requirement"></panel-requirement-card>
+          <panel-requirement-card [requirement]="requirement" [buttonActive]="activeRequirement"></panel-requirement-card>
         }
       </div>
     </div>

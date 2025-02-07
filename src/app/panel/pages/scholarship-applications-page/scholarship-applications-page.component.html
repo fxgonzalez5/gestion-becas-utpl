@@ -12,44 +12,52 @@
     <!-- Tabla -->
     <div class="overflow-x-auto">
       <table class="w-full bg-white border-separate border-spacing-y-4">
+
         <!-- Encabezado -->
-        <thead class="bg-primary text-white text-center text-lg">
+        <thead class="bg-primary text-white text-center text-lg leading-6">
           <tr>
-            @for (header of headers(); track $index; let first = $first, last = $last) {
-              <th class="py-1 px-4 font-medium w-[150px]"
-                  [ngClass]="{'rounded-l-md': first, 'rounded-r-md': last}">{{ header }}</th>
-            }
-            <!-- <th colspan="2" class="py-3 px-4 font-medium w-[200px]">Acciones</th> -->
+            <th class="py-2 px-4 font-medium rounded-l-md w-24">AÑO</th>
+            <th class="py-2 px-4 font-medium w-44">PERÍODO</th>
+            <th class="py-2 px-4 font-medium w-36">MODALIDAD</th>
+            <th class="py-2 px-4 font-medium w-44">TIPO DE BECA</th>
+            <th class="py-2 px-4 font-medium w-40">FECHA DE SOLICITUD</th>
+            <th class="py-2 px-4 font-medium w-44">ESTADO DE SOLICITUD</th>
+            <th class="py-2 px-4 font-medium">OBSERVACIONES</th>
+            <th colspan="2" class="py-2 px-4 font-medium">ACCIONES</th>
+            <th class="py-2 px-4 font-medium w-44 rounded-r-md">FORMULARIO</th>
           </tr>
         </thead>
 
         <!-- Cuerpo de la Tabla -->
         <tbody>
-          @for (row of data(); track $index) {
-            <tr class="bg-surface text-center">
-              <td class="px-4 py-3 rounded-l-md w-[100px]">{{ row.year }}</td>
-              <td class="px-4 py-3 w-[160px]">{{ row.period }}</td>
-              <td class="px-4 py-3 w-[140px]">{{ row.modality }}</td>
-              <td class="px-4 py-3 w-[180px]">{{ row.scholarshipType }}</td>
-              <td class="px-4 py-3 w-[160px]">{{ row.applicationDate }}</td>
-              <td class="px-4 py-3 w-[160px]">{{ row.status === null ? 'En Revisión' : row.status }}</td>
-              <td class="px-4 py-3 w-[180px] rounded-r-md text-left">{{ row.observations === null ? 'Ninguna' : row.observations }}</td>
+          @for (record of applicationsList(); track record.application_id) {
+            <tr class="bg-surface text-center text-lg leading-6">
+              <td class="py-2 px-4 rounded-l-md">{{ record.year }}</td>
+              <td class="py-2 px-4">{{ record.period }}</td>
+              <td class="py-2 px-4">{{ record.modality }}</td>
+              <td class="py-2 px-4">{{ record.scholarship_type }}</td>
+              <td class="py-2 px-4">{{
+                ((record.application_date| date: "d 'de' MMMM")!.split(' ') | slice: 0:-1).join(' ') +
+                ' ' + ((record.application_date | date: "d 'de' MMMM")!.split(' ').slice(-1)[0] | titlecase)
+              }}</td>
+              <td class="py-2 px-4">{{ record.status }}</td>
+              <td class="py-2 px-4 rounded-r-md text-left">{{ record.observations === null ? 'Ninguna' : record.observations }}</td>
 
               <!-- Acciones -->
-              <td class="px-2 py-3 w-[100px] flex justify-center">
-                <button class="px-3 py-1 text-sm rounded-md bg-green-400 text-primary hover:bg-green-500">
+              <td class="w-44 bg-white">
+                <button (click)="onClick(record.scholarship_id)" class="py-5 px-5 rounded-md text-primary bg-green-400 hover:bg-green-500">
                   Ver / Modificar
                 </button>
               </td>
-              <td class="px-2 py-3 w-[100px] flex justify-center">
-                <button class="px-3 py-1 text-sm rounded-md bg-red-400 text-white hover:bg-red-500">
+              <td class="w-32 bg-white">
+                <button class="py-5 px-10 rounded-md text-primary bg-red-400 hover:bg-red-500">
                   Borrar
                 </button>
               </td>
 
               <!-- Generar PDF -->
-              <td class="px-4 py-3 w-[140px] rounded-r-md">
-                <button class="px-3 py-1 text-sm rounded-md bg-yellow-400 text-primary hover:bg-yellow-500">
+              <td class="bg-white">
+                <button class="py-5 px-8 rounded-md text-primary bg-yellow-400 hover:bg-yellow-500">
                   Generar PDF
                 </button>
               </td>

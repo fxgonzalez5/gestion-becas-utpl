@@ -1,48 +1,40 @@
 import { CommonModule } from '@angular/common';
-import { Component, signal } from '@angular/core';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
+
+
+import { AuthService } from '../../../auth/services/auth.service';
+import { ScholarshipsService } from '../../services/scholarships.service';
+import { Application } from '../../interfaces';
+import { Router } from '@angular/router';
 
 @Component({
   imports: [CommonModule],
   templateUrl: './scholarship-applications-page.component.html',
   styleUrl: './scholarship-applications-page.component.css',
 })
-export default class ScholarshipApplicationsPageComponent {
-  public headers = signal([
-    'AÑO', 'PERÍODO', 'MODALIDAD', 'TIPO DE BECA', 'FECHA DE SOLICITUD',
-    'ESTADO DE SOLICITUD', 'OBSERVACIONES', 'ACCIONES', 'FORMULARIO'
-  ]);
+export default class ScholarshipApplicationsPageComponent implements OnInit {
+  private router = inject(Router);
+  private userId = inject(AuthService).currentUser()!.id;
+  private scholarshipsService = inject(ScholarshipsService);
 
-  public data = signal([
-    {
-      year: 2023, period: 'Octubre - Febrero', modality: 'Presencial',
-      scholarshipType: 'Nivel de Ingresos', applicationDate: '19 de Junio',
-      status: 'Beca Asignada', observations: 'Observación'
-    },
-    {
-      year: 2024, period: 'Abril - Agosto', modality: 'Presencial',
-      scholarshipType: 'Deportistas Destacados', applicationDate: '04 de Enero',
-      status: null, observations: null
-    }
-  ]);
+  private _applicationsList = signal<Application[]>([]);
 
-  public datosTabla = [{
-      anio: "2023",
-      periodo: "OCTUBRE - FEBRERO",
-      modalidad: "Precencial",
-      tipoBeca: "Nivel de Ingresos",
-      fechaSolicitud: "19 de Junio",
-      estadoSolicitud: "Beca Asignada",
-      observaciones: "Ninguna",
-      ruta: '/auth/grantrequirements',
-  },
-  {
-      anio: "2024",
-      periodo: "ABRIL - AGOSTO",
-      modalidad: "Precencial",
-      tipoBeca: "Deportistas Destacados",
-      fechaSolicitud: "04 de Enero",
-      estadoSolicitud: "Beca Asignada",
-      observaciones: "Ninguna",
-      ruta: '/auth/grantrequirements',
-  }]
+  public applicationsList = computed(() => this._applicationsList());
+
+  ngOnInit(): void {
+    this.loadApplications();
+  }
+
+  private loadApplications(): void {
+    this.scholarshipsService.getApplications(this.userId)
+      .subscribe({
+        next: applications => this._applicationsList.set(applications),
+        error: error => console.error(error),
+      });
+  }
+
+  onClick(scholarshipId: number): void {
+    this.scholarshipsService.activeRequirements.set(true);
+    this.router.navigateByUrl(`/panel/scholarships/${scholarshipId}/requirements`);
+  }
 }

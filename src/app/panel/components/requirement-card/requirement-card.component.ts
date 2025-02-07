@@ -19,6 +19,8 @@ export class RequirementCardComponent implements OnInit{
   @Input()
   public requirement!: Requirement;
 
+  @Input()
+  public buttonActive!: boolean;
 
   private _textButton = signal<string>('Abrir');
 

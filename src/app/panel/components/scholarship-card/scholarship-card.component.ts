@@ -49,6 +49,7 @@ export class ScholarshipCardComponent implements OnInit {
 
   onClick(): void {
     if (this.appliedScholarshipId === this.scholarship.id) {
+      this.scholarshipsService.activeRequirements.set(false);
       this.router.navigate([this.scholarship.id, 'requirements'], { relativeTo: this.activatedRoute });
     } else if (this.appliedScholarshipId) {
       this.showAlert('Ya has postulado por una beca', 'Para poder postular por esta beca, debes eliminar la postulación actual.', 'info');

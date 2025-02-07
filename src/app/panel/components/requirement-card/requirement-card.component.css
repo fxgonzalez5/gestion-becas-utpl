@@ -16,3 +16,8 @@ mat-card-header, mat-card-content, mat-card-actions {
 .btn-card:hover {
   color: white !important;
 }
+
+.btn-card:disabled {
+  background-color: darkgray;
+  color: gray !important;
+}
