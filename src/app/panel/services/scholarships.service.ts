@@ -103,4 +103,15 @@ export class ScholarshipsService {
         catchError(e => throwError(() => e.error.message))
       );
   }
+
+  deleteApplication(applicationId: number): Observable<boolean> {
+    const url = `${this.baseUrl}/application/remove/${applicationId}`;
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+
+    return this.http.delete(url, { headers }).pipe(
+      map(() => true),
+      catchError(e => throwError(() => e.error.message))
+    );
+  }
 }

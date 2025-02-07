@@ -17,7 +17,7 @@
         <thead class="bg-primary text-white text-center text-lg leading-6">
           <tr>
             <th class="py-2 px-4 font-medium rounded-l-md w-24">AÑO</th>
-            <th class="py-2 px-4 font-medium w-44">PERÍODO</th>
+            <th class="py-2 px-4 font-medium w-48">PERÍODO</th>
             <th class="py-2 px-4 font-medium w-36">MODALIDAD</th>
             <th class="py-2 px-4 font-medium w-44">TIPO DE BECA</th>
             <th class="py-2 px-4 font-medium w-40">FECHA DE SOLICITUD</th>
@@ -50,14 +50,14 @@
                 </button>
               </td>
               <td class="w-32 bg-white">
-                <button class="py-5 px-10 rounded-md text-primary bg-red-400 hover:bg-red-500">
+                <button (click)="onDelete(record.application_id)" class="py-5 px-10 rounded-md text-primary bg-red-400 hover:bg-red-500">
                   Borrar
                 </button>
               </td>
 
               <!-- Generar PDF -->
               <td class="bg-white">
-                <button class="py-5 px-8 rounded-md text-primary bg-yellow-400 hover:bg-yellow-500">
+                <button (click)="onGeneratePDF()" class="py-5 px-8 rounded-md text-primary bg-yellow-400 hover:bg-yellow-500">
                   Generar PDF
                 </button>
               </td>

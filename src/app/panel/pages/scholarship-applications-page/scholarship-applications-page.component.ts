@@ -37,4 +37,19 @@ export default class ScholarshipApplicationsPageComponent implements OnInit {
     this.scholarshipsService.activeRequirements.set(true);
     this.router.navigateByUrl(`/panel/scholarships/${scholarshipId}/requirements`);
   }
+
+  onDelete(applicationId: number): void {
+    this.scholarshipsService.deleteApplication(applicationId)
+      .subscribe({
+        next: (success) => {
+          if (!success) return;
+          this._applicationsList.update((prev) => prev.filter(element => element.application_id !== applicationId));
+        },
+        error: error => console.error(error),
+      });
+  }
+
+  onGeneratePDF(): void {
+    // TODO: Implementar la generación de PDF
+  }
 }
