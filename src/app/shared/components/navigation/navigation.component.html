@@ -25,9 +25,11 @@
             Becas y Ayudas Estudiantiles
           </a>
 
-          <!-- Menú desplegable -->
-          <shared-menu [routes]="menu.slice(1)" (optionSelected)="onMenuOptionSelected()"
-            class="absolute top-full w-full bg-surface shadow-lg text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none group-hover:pointer-events-auto"/>
+          @if (isCompleted !== null) {
+            <!-- Menú desplegable -->
+            <shared-menu [routes]="menu.slice(1)" (optionSelected)="onMenuOptionSelected()"
+              class="absolute top-full w-full bg-surface shadow-lg text-primary opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none group-hover:pointer-events-auto"/>
+          }
           </li>
       </ul>
 

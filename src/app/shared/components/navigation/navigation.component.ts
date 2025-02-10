@@ -1,6 +1,7 @@
 import { Component, Input, OnInit, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { panelRoutes } from '../../../panel/panel.routing';
+
+import { clientRoutes } from '../../../panel/client/client.routing';
 import { MenuComponent } from '../menu/menu.component';
 
 @Component({
@@ -15,9 +16,12 @@ import { MenuComponent } from '../menu/menu.component';
 })
 export class NavigationComponent implements OnInit {
   @Input()
+  public isCompleted: boolean | null = false;
+
+  @Input()
   public onLogout: () => void = () => {};
 
-  public menu = panelRoutes.map((route) => route ?? []).flat()
+  public menu = clientRoutes.map((route) => route ?? []).flat()
     .filter((route) => route && route.path && !route.path.includes('/'));
 
   public isMenuActive = signal<boolean>(false);

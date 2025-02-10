@@ -1,0 +1,16 @@
+.header {
+  background-color: #FEBE10;
+}
+
+th {
+  text-align: center;
+}
+
+tr:not(:last-child) {
+  border-bottom: 2px solid #374151;
+}
+
+mat-radio-group {
+  display: flex;
+  justify-content: center;
+}

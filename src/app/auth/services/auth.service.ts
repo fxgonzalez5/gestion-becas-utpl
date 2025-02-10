@@ -75,4 +75,17 @@ export class AuthService {
     this.router.navigateByUrl('auth');
   }
 
+  updateCompletedTable(userId: string, status: boolean | null): Observable<boolean> {
+    const url = `${this.baseUrl}/auth/user/${userId}/completion`;
+
+    const token = localStorage.getItem('token');
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`)
+
+    const body = { 'has_completed_the_table': status };
+
+    return this.http.put(url, body, { headers }).pipe(
+      map(() => true),
+      catchError(e => throwError(() => e.error.message))
+    );
+  }
 }

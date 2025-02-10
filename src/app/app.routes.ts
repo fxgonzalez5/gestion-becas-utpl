@@ -8,9 +8,8 @@ export const routes: Routes = [
     loadChildren: () => import('./auth/auth.routing').then(r => r.authRoutes),
   },
   {
-    path: 'panel',
+    path: '',
     canActivate: [privateGuard],
-    loadComponent: () => import('./panel/layouts/panel-layout/panel-layout.component'),
     loadChildren: () => import('./panel/panel.routing').then(r => r.panelRoutes),
   },
   { path: '**', redirectTo: 'auth' }

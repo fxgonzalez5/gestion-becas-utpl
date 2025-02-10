@@ -1,7 +1,6 @@
 export interface User {
   id:       string;
-  dni:      string;
-  name:     string;
   email:    string;
-  username: string;
+  has_completed_the_table: boolean | null;
+  location_id: number;
 }
