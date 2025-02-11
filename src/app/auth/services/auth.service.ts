@@ -22,6 +22,10 @@ export class AuthService {
   public authStatus = computed(() => this._authStatus());
   public currentUser = computed(() => this._currentUser());
 
+  public get isAdmin(): boolean {
+    return this.currentUser()?.role === 'admin';
+  }
+
   constructor() {
     this.checkAuthStatus().subscribe();
   }
