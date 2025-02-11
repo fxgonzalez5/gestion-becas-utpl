@@ -25,7 +25,7 @@ export default class ScholarshipListPageComponent implements OnInit {
   private _scholarships: Scholarship[] = [];
   private _recommendedScholarships = signal<Scholarship[]>([]);
   private _displayedScholarships = signal<Scholarship[]>([]);
-  private readonly _size = this.scholarshipsService.recommendedScholarships().length > 0 ? 4 : 9;
+  private _size = 9;
   private _showButton = signal(true);
   private _isShowingAll = signal(false);
 
@@ -46,6 +46,7 @@ export default class ScholarshipListPageComponent implements OnInit {
   public currentYear = signal<string>(this.data()[0].year.toString());
   public currentPeriod = signal<string>(this.data()[0].academicPeriod[0]);
   public currentModality = signal<string>(this.data()[0].modality[0]);
+  public currentCategory = signal<string>('TODAS');
 
   public categories = computed(() => this._categories());
   public recommendedScholarships = computed(() => this._recommendedScholarships());
@@ -56,7 +57,6 @@ export default class ScholarshipListPageComponent implements OnInit {
   ngOnInit(): void {
     this.checkUserApplication();
     this.loadScholarships();
-    this.updateCategories();
   }
 
   getOptions(filter: string): string[] {
@@ -78,44 +78,78 @@ export default class ScholarshipListPageComponent implements OnInit {
     switch (filter) {
       case 'Año':
         this.currentYear.set(value);
+        this.checkUserApplication();
+        this.loadScholarships();
       break;
       case 'Período':
         this.currentPeriod.set(value);
+        this.checkUserApplication();
+        this.loadScholarships();
         break;
       case 'Modalidad':
         this.currentModality.set(value);
+        this.checkUserApplication();
+        this.loadScholarships();
         break;
       case 'Categoría':
-        // Handle category filter change
+        this.currentCategory.set(value);
+        this.updateDisplayedScholarships();
         break;
     }
 
-    // TODO: Implementar la consulta de las becas, de acuerdo al filtro
   }
 
   private checkUserApplication(): void {
-    this.scholarshipsService.hasUserApplied(this.userId, Number(this.currentYear()), this.currentPeriod()).subscribe();
+    this.scholarshipsService.hasUserApplied(this.userId, Number(this.currentYear()), this.currentPeriod(), this.currentModality()).subscribe();
   }
 
   private loadScholarships(): void {
     this.scholarshipsService.getScholarships()
       .subscribe((scholarships) => {
-        // Obtener IDs recomendados
-        const recommendedIds = this.scholarshipsService.recommendedScholarships();
-
-        // Separar becas
-        const recommended: Scholarship[] = [];
-        const nonRecommended: Scholarship[] = [];
-
-        scholarships.forEach(scholarship => {
-          recommendedIds.includes(scholarship.id) ? recommended.push(scholarship) : nonRecommended.push(scholarship);
-        });
-
-        this._recommendedScholarships.set(recommended);
-        this._scholarships = nonRecommended;
+        if (this.currentYear() === this.data()[0].year.toString() && this.currentPeriod() === this.data()[0].academicPeriod[1] && this.currentModality() === this.data()[0].modality[0]) {
+          const nonRecommendedScholarships = this.loadRecommendedScholarships(scholarships);
+          this._scholarships = nonRecommendedScholarships;
+          this._size = 4;
+        } else {
+          this._recommendedScholarships.set([]);
+          this._scholarships = scholarships;
+          this._size = 9;
+        }
         this._displayedScholarships.set(this._scholarships.slice(0, this._size));
         this._showButton.set(this._scholarships.length > this._size);
+        this.updateCategories();
       });
+  }
+
+  private loadRecommendedScholarships(scholarships: Scholarship[]): Scholarship[] {
+    // Obtener IDs recomendados
+    const recommendedIds = this.scholarshipsService.recommendedScholarships();
+
+    // Separar becas
+    const recommended: Scholarship[] = [];
+    const nonRecommended: Scholarship[] = [];
+
+    scholarships.forEach(scholarship => {
+      recommendedIds.includes(scholarship.id) ? recommended.push(scholarship) : nonRecommended.push(scholarship);
+    });
+
+    this._recommendedScholarships.set(recommended);
+    return nonRecommended;
+  }
+
+
+  private updateDisplayedScholarships(): void {
+    if (this.currentCategory() !== 'TODAS') {
+      const filteredScholarships = this._scholarships.filter(
+        (scholarship) => scholarship.category.toLowerCase() === this.currentCategory().toLowerCase()
+      );
+      this._displayedScholarships.set(filteredScholarships);
+      return;
+    }
+
+    this._displayedScholarships.set(this._scholarships);
+    this._isShowingAll.set(true);
+    this._showButton.set(false);
   }
 
   private updateCategories(): void {

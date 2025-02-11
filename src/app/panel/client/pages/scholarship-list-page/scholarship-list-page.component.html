@@ -24,10 +24,9 @@
     <section class="mb-5">
 
       <!-- Encabezado -->
-      <div class="flex-none flex items-center justify-between mb-2">
+      <div class="flex-none flex items-center justify-between mb-4">
         <h2 class="md:text-3xl sm:text-2xl text-primary font-medium">Recomendadas para ti</h2>
-        <panel-options-menu label="Categoría" [options]="categories()"
-          (selectionChange)="onFilterChange($event, 'categoría')"
+        <panel-options-menu label="Categoría" [options]="categories()" (selectionChange)="onFilterChange($event, 'Categoría')"
         ></panel-options-menu>
       </div>
 
@@ -46,10 +45,9 @@
 
     <!-- Encabezado -->
     @if (recommendedScholarships().length === 0) {
-      <div class="flex-none flex items-center justify-between mb-2">
+      <div class="flex-none flex items-center justify-between mb-5">
         <h2 class="md:text-3xl sm:text-2xl text-primary font-medium">Seleccione el tipo de beca</h2>
-        <panel-options-menu label="Categoría" [options]="categories()"
-        (selectionChange)="onFilterChange($event, 'categoría')"
+        <panel-options-menu label="Categoría" [options]="categories()" (selectionChange)="onFilterChange($event, 'Categoría')"
         ></panel-options-menu>
       </div>
     } @else {
@@ -58,7 +56,7 @@
 
     <!-- Tarjetas -->
     <div class="flex-1 overflow-y-auto">
-      <div class="flex flex-wrap gap-6">
+      <div class="flex flex-wrap gap-6 mb-2">
         @for (scholarship of displayedScholarships(); track scholarship.id) {
           @if (scholarship.is_with_application) {
             <panel-scholarship-card [scholarship]="scholarship" [currentYear]="currentYear()"
@@ -67,12 +65,14 @@
         }
       </div>
 
-      <!-- Botón -->
-      <div class="flex-none text-center py-2">
-        <button (click)="onLoadMore()" mat-button>
-          {{ showButton() ? 'Ver más +' : 'Ver menos -' }}
-        </button>
-      </div>
+      @if (currentCategory() === 'TODAS') {
+        <!-- Botón -->
+        <div class="flex-none text-center mb-2">
+          <button (click)="onLoadMore()" mat-button>
+            {{ showButton() ? 'Ver más +' : 'Ver menos -' }}
+          </button>
+        </div>
+      }
     </div>
     <div class="md:h-6 sm:h-4"></div>
   </section>

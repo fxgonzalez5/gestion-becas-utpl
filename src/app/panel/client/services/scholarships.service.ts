@@ -40,7 +40,8 @@ export class ScholarshipsService {
 
     return this.http.get<ScholarshipsResponse>(url, { headers })
       .pipe(
-        map(response => {          // Transformación de los datos de la respuesta
+        map(response => {
+          // Transformación de los datos de la respuesta
           const transformedScholarships = response.scholarships.map(scholarship => ({
             ...scholarship,
             is_with_application: Boolean(scholarship.is_with_application)
@@ -53,8 +54,8 @@ export class ScholarshipsService {
   }
 
   // Método para verificar si el usuario ha postulado
-  hasUserApplied(userId: string, year: number, period: string): Observable<void> {
-    const url = `${this.baseUrl}/application/${userId}/${year}/${period}`;
+  hasUserApplied(userId: string, year: number, period: string, modality: string): Observable<void> {
+    const url = `${this.baseUrl}/application/${userId}/${year}/${period}/${modality}`;
     const token = localStorage.getItem('token');
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
 
@@ -64,7 +65,11 @@ export class ScholarshipsService {
           this._appliedScholarshipId.set(response.scholarshipId);
           sessionStorage.setItem('appliedScholarshipId', response.scholarshipId.toString());
         }),
-        catchError(e => throwError(() => e.error.message))
+        catchError(e => throwError(() => {
+          this._appliedScholarshipId.update(() => 0);
+          sessionStorage.removeItem('appliedScholarshipId');
+          e.error.message
+        }))
       );
   }
 

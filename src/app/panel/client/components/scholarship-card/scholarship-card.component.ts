@@ -22,7 +22,9 @@ export class ScholarshipCardComponent implements OnInit {
   private userId = inject(AuthService).currentUser()!.id;
   private scholarshipsService = inject(ScholarshipsService);
 
-  private appliedScholarshipId = this.scholarshipsService.appliedScholarshipId();
+  private get appliedScholarshipId(): number {
+    return this.scholarshipsService.appliedScholarshipId();
+  };
 
   @Input()
   public scholarship!: Scholarship;
