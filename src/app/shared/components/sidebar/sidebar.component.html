@@ -1,0 +1,22 @@
+<div class="h-full z-30 w-64 bg-primary">
+
+  <!-- Logo -->
+  <div class="flex items-center justify-center">
+    <img src="assets/images/logo_utpl.png" alt="Logo UTPL">
+  </div>
+
+  <!-- Menu Options -->
+  <nav class="mt-5">
+    @for (menuItem of sideMenu; track menuItem.path) {
+      <a class="flex items-center px-6 py-2 mt-4 text-secondary hover:bg-secondary hover-bg-secondary-50 hover:text-white"
+        [routerLink]="menuItem.path" routerLinkActive="active">
+
+        <!-- Icon -->
+        <mat-icon class="w-8 h-8 mr-3">{{ menuItem.data?.['icon'] + '_outlined' }}</mat-icon>
+
+        <!-- Text -->
+        <span>{{ menuItem.title }}</span>
+      </a>
+    }
+  </nav>
+</div>

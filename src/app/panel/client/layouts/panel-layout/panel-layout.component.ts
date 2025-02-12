@@ -20,9 +20,7 @@ export default class PanelLayoutComponent {
     return this.authService.currentUser()!.has_completed_the_table;
   }
 
-  onLogout() {
+  onLogout(): void {
     this.authService.logout();
-    localStorage.clear();
-    sessionStorage.clear();
   }
 }

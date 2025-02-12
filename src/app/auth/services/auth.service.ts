@@ -76,6 +76,8 @@ export class AuthService {
   logout(): void {
     this._currentUser.set(null);
     this._authStatus.set(AuthStatus.unauthenticated);
+    localStorage.clear();
+    sessionStorage.clear();
     this.router.navigateByUrl('auth');
   }
 

@@ -1,6 +1,11 @@
 import { Routes } from '@angular/router';
 
 export const adminRoutes: Routes = [
-  // { path: 'home', loadComponent: () => import('./pages/home-page/home-page.component') },
-  // { path: '', redirectTo: 'home', pathMatch: 'full' },
+  {
+    path: 'scholarships',
+    title: 'Becas',
+    data: { icon: 'school' },
+    loadComponent: () => import('./pages/scholarships-page/scholarships-page.component'),
+  },
+  { path: '', redirectTo: 'scholarships', pathMatch: 'full' },
 ];

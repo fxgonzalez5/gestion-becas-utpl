@@ -19,7 +19,7 @@ export class NavigationComponent implements OnInit {
   public isCompleted: boolean | null = false;
 
   @Input()
-  public onLogout: () => void = () => {};
+  public exit: () => void = () => {};
 
   public menu = clientRoutes.map((route) => route ?? []).flat()
     .filter((route) => route && route.path && !route.path.includes('/'));
