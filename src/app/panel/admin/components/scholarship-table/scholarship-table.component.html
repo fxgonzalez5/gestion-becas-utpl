@@ -1,0 +1,75 @@
+@if (!scholarships || scholarships.length == 0) {
+  <div class="flex justify-center items-center">
+    <p class="text-gray-500">No hay becas registradas</p>
+  </div>
+} @else {
+  <table mat-table [dataSource]="scholarships" class="mat-elevation-z8 drop-shadow-md">
+
+    <!-- Tipo de Beca -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef> Tipo de Beca </th>
+      <td mat-cell *matCellDef="let row" class="w-52">
+        {{ row.name }}
+      </td>
+    </ng-container>
+
+    <!-- Columnas de Evaluación -->
+    @for (column of ['economic', 'health', 'academic', 'sports', 'percentage', 'score']; track column) {
+      <ng-container matColumnDef="{{ column }}">
+        <th mat-header-cell *matHeaderCellDef>
+          @if (column === 'economic') { Situación Económica }
+          @if (column === 'health') { Discapacidad }
+          @if (column === 'academic') { Desempeño Académico }
+          @if (column === 'sports') { Logros Deportivos }
+          @if (column === 'percentage') { Porcentaje Mínimo }
+          @if (column === 'score') { Puntuación Mínima (Del 1 al 5) }
+        </th>
+        <td mat-cell *matCellDef="let row; let i = index" [ngClass]="column === 'score' ? 'w-44' : ''">
+          @if (!row.isEditing) {
+            {{ row[column] }} {{ column === 'score' ? '' : '%' }}
+          } @else {
+            @if (column === 'score') {
+              <input matInput type="number" [(ngModel)]="scholarships[i][column]"   min="1" max="5" class="bg-transparent focus:outline-none">
+            }
+            @if (column === 'economic' || column === 'health' || column === 'academic' || column === 'percentage' || column === 'sports') {
+              <input matInput type="number" [(ngModel)]="scholarships[i][column]" [value]="row[column]" min="0" max="100" class="bg-transparent focus:outline-none">
+            }
+          }
+        </td>
+      </ng-container>
+    }
+
+    <!-- Acciones (Botón Editar) -->
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let row; let i = index" style="padding: 0px;">
+        <button mat-button (click)="enableEdit(i)" [disabled]="row.isEditing">
+          <mat-icon>edit</mat-icon> Editar
+        </button>
+      </td>
+    </ng-container>
+
+    <!-- Acciones (Botón Confirmar) -->
+    <ng-container matColumnDef="confirm">
+      <th mat-header-cell *matHeaderCellDef> Acciones </th>
+      <td mat-cell *matCellDef="let row; let i = index" style="padding: 0px;">
+        <button mat-button (click)="confirmEdit(i)" [disabled]="!row.isEditing">
+          <mat-icon>check</mat-icon> Confirmar
+        </button>
+      </td>
+    </ng-container>
+
+    <!-- Acciones (Botón Cancelar) -->
+    <ng-container matColumnDef="cancel">
+      <th mat-header-cell *matHeaderCellDef></th>
+      <td mat-cell *matCellDef="let row; let i = index" style="padding: 0px;">
+        <button mat-button (click)="cancelEdit(i)" [disabled]="!row.isEditing">
+          <mat-icon>close</mat-icon> Cancelar
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns()"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns();"></tr>
+  </table>
+}
