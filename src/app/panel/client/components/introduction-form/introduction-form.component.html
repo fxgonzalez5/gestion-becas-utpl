@@ -1,0 +1,87 @@
+<div class="absolute inset-0 mt-5 flex items-center justify-center bg-black bg-opacity-25">
+
+  <!-- Ventana Emergente -->
+  <section class="bg-white py-8 px-10 rounded-lg max-w-5xl">
+
+    <!-- Encabezado -->
+    <h2 class="text-2xl font-semibold mb-4">¡Encuentra la beca perfecta para ti! 🎓</h2>
+
+    <p class="text-lg mb-4">
+      Completa este formulario para ayudarte a encontrar la beca que mejor se adapte a tus necesidades.
+      Cada respuesta nos permitirá ofrecerte la recomendación más precisa. 💰✨
+    </p>
+
+    <!-- Formulario -->
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" class="space-y-6">
+
+      <!-- Situación Económica -->
+      <div class="form-group">
+        <label class="block text-lg font-medium mb-2">
+          ¿Cuál es tu situación económica actual?
+        </label>
+        <select formControlName="economic" class="w-full p-2 border rounded-md">
+          <option value=5>Ingresos insuficientes</option>
+          <option value=4>Ingresos mínimos</option>
+          <option value=3>Ingresos limitados</option>
+          <option value=2>Ingresos estables</option>
+          <option value=1>Ingresos superiores al promedio</option>
+        </select>
+      </div>
+
+      <!-- Estado de Salud -->
+      <div class="form-group">
+        <label class="block text-lg font-medium mb-2">
+          ¿Cuentas con algún grado de discapacidad?
+        </label>
+        <select formControlName="health" class="w-full p-2 border rounded-md">
+          <option value=0>Sin discapacidad</option>
+          <option value=1>Discapacidad leve</option>
+          <option value=2>Discapacidad moderada</option>
+          <option value=3>Discapacidad grave</option>
+          <option value=4>Discapacidad muy grave</option>
+          <option value=5>Discapacidad completa</option>
+        </select>
+      </div>
+
+      <!-- Desempeño Académico -->
+      <div class="form-group">
+        <label class="block text-lg font-medium mb-2">
+          ¿Cómo describes tu desempeño académico?
+        </label>
+        <select formControlName="academic" class="w-full p-2 border rounded-md">
+          <option value=1>Promedio académico bajo</option>
+          <option value=2>Promedio académico regular</option>
+          <option value=3>Buen promedio académico</option>
+          <option value=4>Abanderado o Escolta</option>
+          <option value=5>Mejor Egresado</option>
+        </select>
+      </div>
+
+      <!-- Logros Deportivos -->
+      <div class="form-group">
+        <label class="block text-lg font-medium mb-2">
+          ¿Cuáles son tus logros deportivos?
+        </label>
+        <select formControlName="sports" class="w-full p-2 border rounded-md">
+          <option value=0>No aplica</option>
+          <option value=1>Participación ocasional sin méritos</option>
+          <option value=2>Participación regular con méritos menores</option>
+          <option value=3>Participación con méritos a nivel local</option>
+          <option value=4>Participación con méritos a nivel provincial o regional</option>
+          <option value=5>Participación con méritos a nivel nacional o internacional</option>
+        </select>
+      </div>
+
+      <!-- Botones de Acción -->
+      <div class="flex justify-end mt-3 font-medium">
+        <button type="submit" class="w-fit py-2 px-6 bg-secondary text-primary hover:text-white rounded-md">
+          Confirmar
+        </button>
+
+        <button (click)="onNext()" class="w-fit ml-3 py-2 px-6 bg-red-400 text-primary hover:text-white rounded-md">
+          Saltar
+        </button>
+      </div>
+    </form>
+  </section>
+</div>

@@ -1,10 +1,10 @@
 import { Component, inject } from '@angular/core';
 
 import { AuthService } from '../../../../auth/services/auth.service';
-import { DecisionTableComponent } from '../../components/decision-table/decision-table.component';
+import { IntroductionFormComponent } from '../../components/introduction-form/introduction-form.component';
 
 @Component({
-  imports: [DecisionTableComponent],
+  imports: [IntroductionFormComponent],
   templateUrl: './home-page.component.html',
   styleUrls: ['./home-page.component.css'],
 })
