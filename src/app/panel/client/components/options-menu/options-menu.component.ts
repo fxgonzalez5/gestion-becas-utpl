@@ -37,7 +37,11 @@ export class OptionsMenuComponent {
       }
     }
 
-    // Establecer el primer valor como seleccionado
+    // Establecer el primer valor como
+    if (this.label === 'Período'){
+      this.selectedValue.set(this._options[1]);
+      return;
+    }
     this.selectedValue.set(this._options[0]);
   }
 

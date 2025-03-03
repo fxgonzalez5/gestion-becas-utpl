@@ -44,7 +44,7 @@ export default class ScholarshipListPageComponent implements OnInit {
 
   public filters = signal<string[]>(['Año', 'Período', 'Modalidad']).asReadonly();
   public currentYear = signal<string>(this.data()[0].year.toString());
-  public currentPeriod = signal<string>(this.data()[0].academicPeriod[0]);
+  public currentPeriod = signal<string>(this.data()[0].academicPeriod[1]);
   public currentModality = signal<string>(this.data()[0].modality[0]);
   public currentCategory = signal<string>('TODAS');
 
@@ -109,7 +109,7 @@ export default class ScholarshipListPageComponent implements OnInit {
         if (this.currentYear() === this.data()[0].year.toString() && this.currentPeriod() === this.data()[0].academicPeriod[1] && this.currentModality() === this.data()[0].modality[0]) {
           const nonRecommendedScholarships = this.loadRecommendedScholarships(scholarships);
           this._scholarships = nonRecommendedScholarships;
-          this._size = 4;
+          this._size = this._recommendedScholarships().length > 0 ? 4 : 9;
         } else {
           this._recommendedScholarships.set([]);
           this._scholarships = scholarships;
