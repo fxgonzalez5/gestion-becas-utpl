@@ -1,4 +1,22 @@
-<p>Ingrese su número de cédula y el de los miembros de su núcleo familiar:</p>
+<p>Para realizar la validación, debe indicar cuantas personas de su núcleo familiar están o no afiliados al IESS (incluyéndose usted).</p>
+<div class="my-2 flex">
+  <div class="flex-col mr-10">
+    <label class="text-primary font-normal">Afiliados</label>
+    <input [formControl]="affiliations" type="number" min="0" required class="ml-2 w-20 border border-black rounded-md text-center font-normal outline-none"/>
+  </div>
 
-<!-- Formulario de Cédulas y RUC -->
-<panel-input-section [inputsList]="inputsList" (inputsChange)="onInputsChange($event)"></panel-input-section>
+  <div class="flex-col">
+    <label class="text-primary font-normal">No Afiliados</label>
+    <input [formControl]="noAffiliations" type="number"  min="0" required class="ml-2 w-20 border border-black rounded-md text-center font-normal outline-none"/>
+  </div>
+</div>
+
+@if (affiliations.value && affiliations.value > 0) {
+  <p>Ingrese el número de cédula y la contraseña de la persona que esta afiliada al IESS:</p>
+  <panel-client-short-form-section [inputsList]="inputsAffiliationList" (inputsChange)="onInputsAffiliationChange($event)"></panel-client-short-form-section>
+}
+
+@if (noAffiliations.value && noAffiliations.value > 0) {
+  <p>Ingrese el número de cédula y seleccione la fecha de nacimiento de la persona que NO esta afiliada al IESS:</p>
+  <panel-client-short-form-section [inputsList]="inputsNoAffiliationList" (inputsChange)="onInputsNoAffiliationChange($event)"></panel-client-short-form-section>
+}

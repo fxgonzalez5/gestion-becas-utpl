@@ -1,7 +1,7 @@
 <section class="my-5">
   <div class="flex flex-wrap justify-between items-center gap-4">
     @for (item of dynamicInputs(); track item.id) {
-      <panel-custom-input [inputModel]="item" (valueChange)="updateInputValue(item.id, $event)"></panel-custom-input>
+      <panel-custom-input [inputModel]="item" (valueChange)="updateInputValue(item.id, $event)" [isNumber]="true"></panel-custom-input>
 
       @if (item.id === 1) {
         <button (click)="addInput()"

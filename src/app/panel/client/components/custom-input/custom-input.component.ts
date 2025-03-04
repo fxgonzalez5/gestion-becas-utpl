@@ -1,16 +1,28 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { InputModel } from '../../interfaces/input-model.interface';
 
 @Component({
-  imports: [CommonModule],
   selector: 'panel-custom-input',
   templateUrl: './custom-input.component.html',
-  styles: ``
+  styles: `
+    /* Ocultar el icono del calendario en navegadores compatibles */
+    input[type="date"]::-webkit-calendar-picker-indicator {
+      display: none;
+      -webkit-appearance: none;
+    }
+
+    /* Para Firefox */
+    input[type="date"]::-moz-calendar-picker-indicator {
+      display: none;
+    }
+  `
 })
 export class CustomInputComponent implements OnInit {
   @Input()
   public inputModel!: InputModel;
+
+  @Input()
+  public isNumber: boolean = false;
 
   @Output()
   public valueChange = new EventEmitter<string>();
@@ -23,6 +35,11 @@ export class CustomInputComponent implements OnInit {
 
   onInputChange(event: any): void {
     const input = event.target;
+    if (!this.isNumber) {
+      this.valueChange.emit(input.value);
+      return;
+    }
+
     const value = input.value.replace(/\D/g, '');
     input.value = value;
     this.valueChange.emit(value);

@@ -14,7 +14,10 @@
           <span (click)="goBack()" class="material-icons md:text-4xl sm:text-xl mb-5 cursor-pointer">close</span>
         </div>
 
-        <router-outlet></router-outlet>
+        <!-- Contenedor Scrollable -->
+        <div class="flex-1 overflow-y-auto pr-4">
+          <router-outlet></router-outlet>
+        </div>
 
         <!-- Botón para validar los inputs de las páginas hijas -->
         <div class="flex justify-end">

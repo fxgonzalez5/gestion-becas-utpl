@@ -1,0 +1,8 @@
+<section class="mt-2 mb-5">
+  <div class="flex flex-col gap-4">
+    @for (item of dynamicInputs(); track item.id; let index = $index, even = $even) {
+      @if (even) { <span class="text-primary underline -mb-2">Persona {{(item.id + 1) / 2}}</span> }
+      <panel-custom-input [inputModel]="item" (valueChange)="updateInputValue(item.id, $event)" [isNumber]="even"></panel-custom-input>
+    }
+  </div>
+</section>
